@@ -1,0 +1,10 @@
+.avatar {
+    background-color: white;
+    border-radius: 100%;
+    aspect-ratio: 1;
+    padding: 0em !important;
+    height: 2.5em !important;
+    -webkit-user-drag: none;
+    border: 1px solid grey;
+    margin: 0 0.4rem;
+}

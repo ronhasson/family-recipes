@@ -1,0 +1,7 @@
+.groupContainer {
+    display: grid;
+    grid-template-columns: repeat(3, min(10em, 29%));
+    gap: 2em;
+    justify-content: center;
+    padding: 0.7em;
+}

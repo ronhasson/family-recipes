@@ -1,23 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+import { Routes, Route } from "react-router-dom";
+import Recipes from './routes/Recipes.jsx';
+import Groups from './routes/Groups';
+import Header from './components/header';
+import Profile from './routes/Profile';
+import { useEffect } from 'react';
 
 function App() {
+  function resize() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }
+
+  useEffect(() => {
+    resize();
+    window.addEventListener('resize', resize);
+    return () => {
+      window.removeEventListener("resize", resize);
+    }
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Recipes />} />
+        <Route path="/groups" element={<Groups />} />
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
     </div>
   );
 }

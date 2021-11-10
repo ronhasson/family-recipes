@@ -1,0 +1,7 @@
+.groupAvatar span {
+    display: block;
+    font-size: 0.7em;
+    overflow-wrap: anywhere;
+    line-height: 1.1em;
+    padding: 0 0.3em;
+}

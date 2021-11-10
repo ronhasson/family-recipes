@@ -1,0 +1,57 @@
+.list {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    min-width: 10rem;
+    background-color: hsl(0deg 0% 98%);
+    right: 0;
+    top: 0;
+    margin: 3px;
+    padding: 0.5em;
+    padding-top: 0;
+    border: 1px solid hsl(0deg 0% 75%);
+    border-radius: 15px;
+    z-index: 2;
+    animation: fadeIn 0.6s;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+.userDropdown {
+    display: flex;
+}
+
+.dropHeader {
+    border-bottom: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em;
+}
+
+.dropHeader>span {
+    font-weight: bold;
+}
+
+.buttonList>* {
+    color: black;
+    text-decoration: none;
+    padding: 0.5em 1em;
+    display: block;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.buttonList>*:hover {
+    background-color: hsl(0deg 0% 94%);
+}

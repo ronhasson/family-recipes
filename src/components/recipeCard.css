@@ -1,0 +1,39 @@
+.recipeCard {
+    width: 19em;
+    height: 15.5em;
+    border-radius: 5px;
+    border: 3px solid white;
+    box-shadow: 0px 1px 5px 0px #adadad;
+}
+
+.cardImage {
+    background-image: url(../img/foodPlaceholder.jpg);
+    height: 9em;
+    background-size: cover;
+    background-position: 50% 50%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.cardText {
+    padding: 0.3em;
+    text-align: initial;
+    max-height: 6em;
+}
+
+.cardText h3,
+p {
+    margin: 0.3em;
+    font-size: 95%;
+}
+
+.cardText h3 {
+    font-size: 1.05em;
+}
+
+.cardText p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}
