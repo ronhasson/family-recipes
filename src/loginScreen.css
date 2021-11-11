@@ -1,0 +1,164 @@
+html,
+body {
+    background-image: url(./img/kitchen_blurred.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    width: initial !important;
+}
+
+.loginContainer {
+    height: 100%;
+    background-color: hsl(0deg 0% 100% / 60%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: clamp(0.8em, 2vmin, 3em);
+}
+
+@media (max-width:320px) {
+
+    /* smartphones, iPhone, portrait 480x320 phones */
+
+}
+
+@media (max-width:481px) {
+
+    /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+    .loginContainer {
+        font-size: clamp(0.8em, 4.7vmin, 3em);
+    }
+}
+
+@media (max-width:641px) {
+    /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+}
+
+@media (max-width:961px) {
+
+    /* tablet, landscape iPad, lo-res laptops ands desktops */
+    .loginContainer {
+        font-size: clamp(0.8em, 3vmin, 3em);
+    }
+}
+
+@media (max-width:1025px) {
+    /* big landscape tablets, laptops, and desktops */
+}
+
+@media (max-width:1281px) {
+    /* hi-res laptops and desktops */
+}
+
+.loginscreen {
+    text-align: center;
+    background-color: hsl(0deg 0% 100% / 75%);
+    padding: 3em 4em;
+    width: max-content;
+    height: max-content;
+}
+
+h1 {
+    display: inline-block;
+    /* width: 100vw; */
+    margin-top: 0;
+    margin-bottom: 1em;
+    user-select: none;
+}
+
+.loginscreen button {
+    display: flex;
+    padding: 0.5em 0.9em;
+    background: transparent;
+    border: 1.5px solid black;
+    border-radius: 0.3em;
+    width: max-content;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s background-color;
+    cursor: pointer;
+    font-size: 0.7em;
+}
+
+.loginscreen button>img {
+    height: 1em;
+    margin-right: 0.5em;
+}
+
+.loginscreen button:hover {
+    background-color: rgb(255 255 255 / 70%);
+}
+
+.loginscreen button:active {
+    background-color: hsl(0deg 0% 65% / 70%);
+}
+
+.loginSec,
+.regSec {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginscreen span {
+    font-size: 90%;
+    margin: 1em 0;
+    user-select: none;
+}
+
+.loginscreen span:before,
+.loginscreen span:after {
+    background-color: #000;
+    content: "";
+    display: inline-block;
+    height: 1px;
+    position: relative;
+    vertical-align: middle;
+    width: 2em;
+}
+
+.loginscreen span:before {
+    right: 0.5em;
+    margin-left: -50%;
+}
+
+.loginscreen span:after {
+    left: 0.5em;
+    margin-right: -50%;
+}
+
+.loginSec>div,
+.regSec>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginSec>div>button,
+.regSec>div>button {
+    margin-top: 0.5em;
+}
+
+.loginscreen input {
+    padding: 0.2em;
+    margin: 0.8em 0;
+    background: transparent;
+    border: transparent;
+    border-bottom: 1px solid black;
+    font-size: 0.7em;
+}
+
+.loginscreen>div input:first-of-type {
+    margin-top: 0;
+}
+
+.loginscreen input+input {
+    margin-top: 0;
+}
+
+.loginscreen>div>div {
+    margin-bottom: 3.5em;
+}
