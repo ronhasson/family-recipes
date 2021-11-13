@@ -16,7 +16,7 @@ export default function Header() {
             </nav>
             <div style={{ flexGrow: 1 }}></div> {/*spacer*/}
 
-            <UserDropdown render={<Avatar clickable />} />
+            <UserDropdown render={<Avatar mine clickable />} />
         </div >
     );
 }

@@ -15,7 +15,7 @@ export default function Recipes() {
         <main className="recipesPage">
             <div className="groupBar">
                 <span className="allFilter">All</span>
-                <Avatar />
+                <Avatar mine />
                 <GroupAvatar name="משפחת חסון" tColor="white" />
                 <GroupAvatar name="הג'ינג'ית וארבעת המופלאים" tColor="white" />
                 {groups}

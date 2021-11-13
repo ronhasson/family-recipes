@@ -10,6 +10,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import Loading from './components/loading';
 import LoginScreen from './LoginScreen';
 
+export const UserContext = createContext();
+
 function App() {
   function resize() {
     let vh = window.innerHeight * 0.01;
@@ -24,7 +26,6 @@ function App() {
     }
   }, []);
 
-  const UserContext = createContext()
   const [user, loading, error] = useAuthState(auth);
   if (user) {
     return (
@@ -42,7 +43,13 @@ function App() {
       </Suspense>
     );
   } else {
-    return (<LoginScreen />)
+    if (loading) {
+      return (<Loading />);
+    }
+    if (error) {
+      console.log(error);
+    }
+    return (<LoginScreen />);
   }
 
 }

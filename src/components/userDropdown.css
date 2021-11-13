@@ -41,6 +41,7 @@
 
 .dropHeader>span {
     font-weight: bold;
+    text-transform: capitalize;
 }
 
 .buttonList>* {

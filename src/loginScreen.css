@@ -1,10 +1,10 @@
-html,
-body {
+.notApp {
     background-image: url(./img/kitchen_blurred.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 50% 50%;
     width: initial !important;
+    height: calc(var(--vh, 1vh) * 100);
 }
 
 .loginContainer {
@@ -58,7 +58,7 @@ body {
     height: max-content;
 }
 
-h1 {
+.loginH1 {
     display: inline-block;
     /* width: 100vw; */
     margin-top: 0;

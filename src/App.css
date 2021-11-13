@@ -1,15 +1,16 @@
-html,
+/* html,
 body {
   height: 100%;
-}
+} */
 
-#root {
+/* #root {
   height: inherit;
-}
+} */
 
 .App {
   text-align: center;
   height: 100%;
+  height: calc(var(--vh, 1vh) * 100);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -18,14 +19,13 @@ body {
   }
 }
 
-@media (max-width:551px) {
+@media (max-width:481px) {
+  /*was 551px*/
 
-  html,
-  body {
+  .App {
     /* height: fit-content; */
     width: fit-content;
-    height: calc(var(--vh, 1vh) * 100);
-    ;
+    /* height: calc(var(--vh, 1vh) * 100); */
     /* background-color: red; */
   }
 }

@@ -1,14 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "./avatar";
-import "./userDropdown.css"
+import "./userDropdown.css";
+import { auth } from "../firebase.js";
+import { signOut } from "firebase/auth";
+import { UserContext } from "../App.js";
 
 function UserDropdown(props) {
     const [open, setOpen] = useState(false);
 
-    // props.render.onClick = () => {
-    //     setOpen(!open);
-    // }
     let selfRef = useRef(null);
     function handleClose(e) {
         if (!selfRef.current.contains(e.target)) {
@@ -21,7 +21,17 @@ function UserDropdown(props) {
         return () => {
             document.removeEventListener("click", handleClose);
         }
-    }, [])
+    }, []);
+
+    const user = useContext(UserContext);
+
+    function logout() {
+        signOut(auth).then(() => {
+            // Sign-out successful.
+        }).catch((error) => {
+            // An error happened.
+        });
+    }
 
     return (
         <>
@@ -29,14 +39,14 @@ function UserDropdown(props) {
                 {props.render}
                 {open && <div className="list">
                     <div className="dropHeader">
-                        <span>Name</span>
-                        <Avatar />
+                        <span>{user.displayName}</span>
+                        <Avatar mine />
                     </div>
                     <div className="buttonList">
                         <Link to="/profile">Profile & Settings</Link>
                         <Link to="/">Create a book</Link>
                         <Link to="/">Help</Link>
-                        <span style={{ color: "red" }}>Log out</span>
+                        <span onClick={logout} style={{ color: "red" }}>Log out</span>
                     </div>
                 </div>}
             </div>
