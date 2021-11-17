@@ -45,6 +45,7 @@ function UserDropdown(props) {
                     <div className="buttonList">
                         <Link to="/profile">Profile & Settings</Link>
                         <Link to="/">Create a book</Link>
+                        <Link to="/">About</Link>
                         <Link to="/">Help</Link>
                         <span onClick={logout} style={{ color: "red" }}>Log out</span>
                     </div>

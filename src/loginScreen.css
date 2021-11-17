@@ -129,16 +129,14 @@
     margin-right: -50%;
 }
 
-.loginSec>div,
-.regSec>div {
+.inputs {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.loginSec>div>button,
-.regSec>div>button {
+.inputs>button {
     margin-top: 0.5em;
 }
 
@@ -159,6 +157,6 @@
     margin-top: 0;
 }
 
-.loginscreen>div>div {
+.inputs {
     margin-bottom: 3.5em;
 }

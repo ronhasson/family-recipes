@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import logo from "../logo.svg";
+import logo from "../logo_tiny.webp";
 import Avatar from "./avatar.jsx";
 import UserDropdown from "./userDropdown.jsx";
 import "./header.css"
