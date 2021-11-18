@@ -20,7 +20,8 @@
     height: 2.5em;
     font-size: 14px;
     padding: 0 0.5em;
-    width: min-content;
+    /* width: min-content; */
+    width: 14em;
 }
 
 .tagsInput input:focus {

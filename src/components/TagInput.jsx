@@ -20,11 +20,13 @@ function TagsInput(props) {
         }
     };
 
+    let inputText = (props.ingred) ? "Press enter to add ingredient" : "Press enter to add tags";
+
     return (
         <div id={props.id || ""} className={styles.tagsInput}>
             <ul className={styles.tags}>
                 {tags.map((tag, index) => (
-                    <li key={index} className={styles.tag}>
+                    <li draggable key={index} className={styles.tag}>
                         <span className={styles.tagTitle}>{tag}</span>
                         <span className={styles.tagClose}
                             onClick={() => removeTags(index)}
@@ -37,7 +39,7 @@ function TagsInput(props) {
             <input
                 type="text"
                 onKeyUp={event => event.key === "Enter" ? addTags(event) : null}
-                placeholder="Press enter to add tags"
+                placeholder={inputText}
             />
         </div>
     );

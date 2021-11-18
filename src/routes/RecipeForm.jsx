@@ -1,4 +1,5 @@
 import { useRef, useEffect } from "react";
+import DurationInput from "../components/DurationInput";
 import TagsInput from "../components/TagInput";
 import placeholder from "../img/foodPlaceholder.jpg";
 import styles from "./recipeForm.module.css";
@@ -13,10 +14,10 @@ function RecipeForm() {
         }
     }, []);
     function resize() {
-        if (mainRef.current.scrollTop > 150) {
+        if (mainRef.current.scrollTop > 15) {
             imageRef.current.style.height = "12em";
         }
-        if (mainRef.current.scrollTop < 5) {
+        if (mainRef.current.scrollTop < 1) {
             imageRef.current.style.height = "22em";
         }
     }
@@ -27,15 +28,16 @@ function RecipeForm() {
         <div ref={mainRef} className={styles.formContainer} >
             <img ref={imageRef} src={placeholder} alt="" />
             <form action="">
-                <input type="text" name="title" id="title" placeholder="My Recipe" />
+                <input type="text" className={styles.titleInput} name="title" id="title" placeholder="My Recipe Name" />
                 <label htmlFor="desc">Description</label>
-                <textarea name="desc" id="desc" cols="30" rows="3"></textarea>
+                <div className={styles.contentEditable} name="desc" id="desc" contentEditable role="textbox" ></div>
                 <label htmlFor="tags">Tags that describe the recipe</label>
                 <TagsInput id="tags" selectedTags={selectedTags} tags={['Dinner', 'Moroccan']} />
                 <label htmlFor="ingred">Ingredients</label>
                 <TagsInput id="ingred" ingred selectedTags={selectedTags} tags={['1 cup flour', '2 tablespoon salt']} />
+                <DurationInput />
             </form>
-
+            <span className={styles.padding}></span>
         </div>
     );
 }
