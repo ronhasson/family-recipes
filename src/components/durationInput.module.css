@@ -66,3 +66,28 @@
     justify-content: center;
     font-size: 85%;
 }
+.buttonContainer{
+    display: flex;
+    justify-content: space-evenly;
+}
+.buttonContainer button{
+    width: 45%;
+    border: 1px solid #404040;
+    color: white;
+    height: 1.6em;
+    transform: rotateX(35deg);
+    transform-origin: top;
+    transition: 0.13s;
+    box-shadow: 0px 10px 0px #404040;
+    cursor: pointer;
+}
+.buttonContainer button:active{
+    transform: rotateX(00deg);
+    box-shadow: 0px 00px 0px #404040;
+}
+.buttonContainer button:first-child{
+    background-color: darkgreen;
+}
+.buttonContainer button:last-child{
+    background-color: darkred;
+}

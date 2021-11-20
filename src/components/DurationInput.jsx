@@ -38,6 +38,7 @@ function DurationInput() {
 
 const DurationTrack = ({ numbers, qualifier, border, onChange }) => {
     const list = useRef(null);
+    const [value, setValue] = useState(0);
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries, observer) => {
@@ -45,7 +46,9 @@ const DurationTrack = ({ numbers, qualifier, border, onChange }) => {
                     if (!entry.isIntersecting) {
                         return;
                     }
-                    onChange(Number.parseFloat(entry.target.textContent));
+                    let n = Number.parseFloat(entry.target.textContent)
+                    onChange(n);
+                    setValue(n)
                 });
             },
             { threshold: 0.75 }
@@ -61,11 +64,20 @@ const DurationTrack = ({ numbers, qualifier, border, onChange }) => {
             <div className={styles.StyledNumber} key={qualifier + number}>{number}</div>
         ));
     };
+    
+
+    function durationScrollBy(delta){
+        let i = Math.max(delta+value, 0);
+        i = Math.min(i,numbers.length)
+        list.current.childNodes[i].scrollIntoView();
+        //console.log(list.current.childNodes);
+    }
 
     return (
         <div className={styles.StyledTrack} border={border}>
             <div className={styles.StyledHeader}>{qualifier}</div>
             <div className={styles.StyledList} ref={list}>{renderNumberJSX()}</div>
+            <div className={styles.buttonContainer}><button onClick={()=>{durationScrollBy(1)}}  type="button">+</button><button onClick={()=>{durationScrollBy(-1)}} type="button">-</button></div>
         </div>
     );
 };
