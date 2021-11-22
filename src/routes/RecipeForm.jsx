@@ -7,10 +7,11 @@ function RecipeForm() {
     const mainRef = useRef();
     const imageRef = useRef();
     useEffect(() => {
+        let mainR = mainRef.current;
         imageRef.current.style.height = "22em";
-        mainRef.current.addEventListener('scroll', resize);
+        mainR.addEventListener('scroll', resize);
         return () => {
-            mainRef.current.removeEventListener("scroll", resize);
+            mainR.removeEventListener("scroll", resize);
         }
     }, []);
     function resize() {
@@ -35,7 +36,14 @@ function RecipeForm() {
                 <TagsInput id="tags" selectedTags={selectedTags} tags={['Dinner', 'Moroccan']} />
                 <label htmlFor="ingred">Ingredients</label>
                 <TagsInput id="ingred" ingred selectedTags={selectedTags} tags={['1 cup flour', '2 tablespoon salt']} />
-                <DurationInput />
+                <div className={styles.gridDurationDiv}>
+                    <label htmlFor="prepTime">Prep time</label>
+                    <DurationInput id="prepTime" />
+                    <label htmlFor="cookTime">Cook time</label>
+                    <DurationInput id="cookTime" />
+                </div>
+                <label htmlFor="idk">Instructions</label>
+
             </form>
             <span className={styles.padding}></span>
         </div>

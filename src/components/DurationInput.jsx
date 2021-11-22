@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./durationInput.module.css";
 
-function DurationInput() {
+function DurationInput(props) {
     const [duration, setDuration] = useState(0);
     const [days, setDays] = useState(0);
     const [hours, setHours] = useState(0);
@@ -14,8 +14,8 @@ function DurationInput() {
 
     return (
         <>
-            <div>{duration} minutes</div>
-            <div className={styles.StyledContainer}>
+            <div style={{ display: "none" }}>{duration} minutes</div>
+            <div id={props.id} className={styles.StyledContainer}>
                 <DurationTrack
                     numbers={[...Array(31).keys()]}
                     qualifier="day(s)"
@@ -64,11 +64,11 @@ const DurationTrack = ({ numbers, qualifier, border, onChange }) => {
             <div className={styles.StyledNumber} key={qualifier + number}>{number}</div>
         ));
     };
-    
 
-    function durationScrollBy(delta){
-        let i = Math.max(delta+value, 0);
-        i = Math.min(i,numbers.length)
+
+    function durationScrollBy(delta) {
+        let i = Math.max(delta + value, 0);
+        i = Math.min(i, numbers.length - 1)
         list.current.childNodes[i].scrollIntoView();
         //console.log(list.current.childNodes);
     }
@@ -77,7 +77,7 @@ const DurationTrack = ({ numbers, qualifier, border, onChange }) => {
         <div className={styles.StyledTrack} border={border}>
             <div className={styles.StyledHeader}>{qualifier}</div>
             <div className={styles.StyledList} ref={list}>{renderNumberJSX()}</div>
-            <div className={styles.buttonContainer}><button onClick={()=>{durationScrollBy(1)}}  type="button">+</button><button onClick={()=>{durationScrollBy(-1)}} type="button">-</button></div>
+            <div className={styles.buttonContainer}><button onClick={() => { durationScrollBy(1) }} type="button">+</button><button onClick={() => { durationScrollBy(-1) }} type="button">-</button></div>
         </div>
     );
 };
