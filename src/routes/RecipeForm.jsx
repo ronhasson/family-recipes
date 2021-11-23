@@ -1,8 +1,11 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import DurationInput from "../components/DurationInput";
+import InstructionsInput from "../components/InstructionsInput";
 import TagsInput from "../components/TagInput";
 import placeholder from "../img/foodPlaceholder.jpg";
 import styles from "./recipeForm.module.css";
+import ContentEditable from 'react-contenteditable';
+
 function RecipeForm() {
     const mainRef = useRef();
     const imageRef = useRef();
@@ -25,13 +28,17 @@ function RecipeForm() {
     const selectedTags = tags => {
         console.log(tags);
     };
+
+    const [desc, setDesc] = useState("");
+
     return (
         <div ref={mainRef} className={styles.formContainer} >
             <img ref={imageRef} src={placeholder} alt="" />
             <form action="">
                 <input type="text" className={styles.titleInput} name="title" id="title" placeholder="My Recipe Name" />
                 <label htmlFor="desc">Description</label>
-                <div className={styles.contentEditable} name="desc" id="desc" contentEditable role="textbox" ></div>
+                <ContentEditable html={desc} onChange={(e) => { setDesc(e.target.value) }} className={styles.contentEditable} />
+                {/* <div className={styles.contentEditable} name="desc" id="desc" contentEditable role="textbox" ></div> */}
                 <label htmlFor="tags">Tags that describe the recipe</label>
                 <TagsInput id="tags" selectedTags={selectedTags} tags={['Dinner', 'Moroccan']} />
                 <label htmlFor="ingred">Ingredients</label>
@@ -42,8 +49,8 @@ function RecipeForm() {
                     <label htmlFor="cookTime">Cook time</label>
                     <DurationInput id="cookTime" />
                 </div>
-                <label htmlFor="idk">Instructions</label>
-
+                <label htmlFor="instr">Instructions</label>
+                <InstructionsInput id="instr" />
             </form>
             <span className={styles.padding}></span>
         </div>

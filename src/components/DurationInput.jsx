@@ -57,7 +57,7 @@ const DurationTrack = ({ numbers, qualifier, border, onChange }) => {
             //console.log("child", child);
             observer.observe(child);
         });
-    }, []);
+    }, [onChange]);
 
     const renderNumberJSX = () => {
         return numbers.map((number, i) => (

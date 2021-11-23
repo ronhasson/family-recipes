@@ -22,6 +22,8 @@
     padding: 0 0.5em;
     /* width: min-content; */
     width: 14em;
+    unicode-bidi: plaintext;
+    text-align: left;
 }
 
 .tagsInput input:focus {
@@ -53,11 +55,13 @@
     border-radius: 6px;
     /* background: #cc0088; */
     height: 1.7em;
+    unicode-bidi: plaintext;
 }
 
 .tag .tagTitle {
     /* margin-top: 3px; */
     user-select: none;
+    unicode-bidi: plaintext;
 }
 
 .tag .tagClose {
