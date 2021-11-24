@@ -1,0 +1,44 @@
+.button {
+    display: flex;
+    padding: 0.5em 0.9em;
+    background: transparent;
+    border: 1.5px solid black;
+    border-radius: 0.3em;
+    width: max-content;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s background-color;
+    cursor: pointer;
+    font-size: 0.7em;
+}
+
+.button>img {
+    height: 1.2em;
+    margin-right: 0.5em;
+}
+
+.button:hover {
+    background-color: var(--bColor, rgb(255 255 255 / 70%));
+}
+
+.button:active {
+    background-color: hsl(0deg 0% 65% / 70%) !important;
+}
+
+.blueHover {
+    --bColor: hsl(222deg 85% 79%);
+}
+
+.white {
+    color: white;
+    background: hsl(216deg 75% 55%);
+}
+
+.white>img {
+    filter: invert(1);
+}
+
+.white:hover {
+    background-color: var(--bColor, hsl(222deg 100% 59%)) !important;
+}

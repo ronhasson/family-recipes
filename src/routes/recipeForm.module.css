@@ -61,6 +61,14 @@
     unicode-bidi: plaintext;
 }
 
+.contentEditable * {
+    unicode-bidi: plaintext;
+}
+
+.contentEditable * * {
+    unicode-bidi: plaintext;
+}
+
 .gridDurationDiv {
     display: grid;
     align-items: center;
@@ -71,4 +79,9 @@
 
 .formContainer label {
     margin-top: 0.5em;
+}
+
+.hr {
+    border-top: 1px solid hsl(0deg 0% 75%);
+    width: 95%;
 }

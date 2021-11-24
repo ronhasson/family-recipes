@@ -9,6 +9,7 @@ function TagsInput(props) {
 
     const removeTags = indexToRemove => {
         setTags([...tags.filter((elm, index) => index !== indexToRemove)]);
+        props.selectedTags([...tags.filter((elm, index) => index !== indexToRemove)]);
     };
     const addTags = event => {
         if (event.target.value !== "") {

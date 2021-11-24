@@ -2,19 +2,24 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./durationInput.module.css";
 
 function DurationInput(props) {
-    const [duration, setDuration] = useState(0);
+    // const [duration, setDuration] = useState(0);
     const [days, setDays] = useState(0);
     const [hours, setHours] = useState(0);
     const [minutes, setMinutes] = useState(0);
+    const onChange = props.onChange;
 
     useEffect(() => {
-        const value = days * 1440 + hours * 60 + minutes;
-        setDuration(value);
-    }, [days, hours, minutes]);
+        // const value = days * 1440 + hours * 60 + minutes;
+        // setDuration(value);
+        onChange([days, hours, minutes]);
+    }, [days, hours, minutes, onChange]);
+    // const _setDays = (value) => { setDays(value); onChange([value, hours, minutes]) }
+    // const _setHours = (value) => { setHours(value); onChange([days, value, minutes]) }
+    // const _setMinutes = (value) => { setMinutes(value); onChange([days, hours, value]) }
 
     return (
         <>
-            <div style={{ display: "none" }}>{duration} minutes</div>
+            {/* <div style={{ display: "none" }}>{duration} minutes</div> */}
             <div id={props.id} className={styles.StyledContainer}>
                 <DurationTrack
                     numbers={[...Array(31).keys()]}
@@ -57,7 +62,7 @@ const DurationTrack = ({ numbers, qualifier, border, onChange }) => {
             //console.log("child", child);
             observer.observe(child);
         });
-    }, [onChange]);
+    }, []);
 
     const renderNumberJSX = () => {
         return numbers.map((number, i) => (

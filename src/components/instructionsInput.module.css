@@ -1,0 +1,12 @@
+.instruc {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-bottom: 0.4em;
+}
+
+.instruc>span {
+    font-weight: lighter;
+    width: 1em;
+    text-align: center;
+}
