@@ -11,6 +11,7 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import Loading from './components/loading';
 import LoginScreen from './LoginScreen';
 import RecipeForm from './routes/RecipeForm';
+import Recipe from './routes/Recipe';
 
 export const UserContext = createContext();
 
@@ -60,6 +61,7 @@ function App() {
               <Route path="/groups" element={<Groups />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/editrecipe" element={<RecipeForm />} />
+              <Route path="/recipe/:id" element={<Recipe />} />
             </Routes>
           </div>
         </UserContext.Provider>

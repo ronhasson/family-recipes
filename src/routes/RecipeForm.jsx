@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useContext } from "react";
 import DurationInput from "../components/DurationInput";
 import InstructionsInput from "../components/InstructionsInput";
 import TagsInput from "../components/TagInput";
@@ -8,8 +8,12 @@ import ContentEditable from 'react-contenteditable';
 import sanitizeHtml from "sanitize-html";
 import { button, white } from "../commonStyles.module.css";
 import uploadImage from "../img/upload.svg";
+import { db } from "../firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { UserContext } from "../App.js";
 
 function RecipeForm() {
+    const user = useContext(UserContext);
 
     const [title, setTitle] = useState("");
     const [desc, setDesc] = useState("");
@@ -21,6 +25,8 @@ function RecipeForm() {
 
     const mainRef = useRef();
     const imageRef = useRef();
+    const [publishing, setPublishing] = useState(false);
+
     useEffect(() => {
         let mainR = mainRef.current;
         imageRef.current.style.height = "22em";
@@ -55,14 +61,27 @@ function RecipeForm() {
         setDesc(sanitized);
     };
 
-    function submit(e) {
+    async function submit(e) {
         e.preventDefault();
-        if (e.target.keyCode === 13) {
-            return;
-        }
         // console.log(e)
-        console.log("submit")
+        console.log("submit");
+        setPublishing(true);
+        const docRef = await addDoc(collection(db, "recipes"), {
+            name: title,
+            owner: user.uid,
+            sharedWith: [],
+            isPublic: true,
+            date: serverTimestamp(),
+            desc: desc,
+            tags: tags,
+            prep: prep,
+            cook: cook,
+            ingredients: ingredients,
+            instructions: instructions
+        });
+        console.log("Document written with ID: ", docRef.id);
     }
+
     function disableEnter(e) {
         if (e.keyCode === 13 && e.target.tagName.toLowerCase() === "input") {
             // console.log(e);
@@ -91,10 +110,11 @@ function RecipeForm() {
                 <label htmlFor="instr">Instructions</label>
                 <InstructionsInput id="instr" onChange={setInstructions} />
                 <hr className={styles.hr} />
+                <div><input type="checkbox" />Publicly avilable with link (TODO)</div>
                 <label htmlFor="">Share with</label>
-                <input type="text" />
-                <span>TODO</span>
-                <button style={{ fontSize: "0.9em" }} className={[button, white].join(" ")}><img src={uploadImage} alt="" />Publish</button>
+                <input type="text" placeholder="TODO" />
+                {!publishing && <button style={{ fontSize: "0.9em", marginTop: "1.6em" }} className={[button, white].join(" ")}><img src={uploadImage} alt="" />Publish</button>}
+                {publishing && <span>Publishing...</span>}
             </form>
             <span className={styles.padding}></span>
         </div>
