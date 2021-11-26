@@ -1,10 +1,9 @@
-import { useRef, useEffect, useState, useContext, Suspense } from "react";
+import { useRef, useEffect, useContext, Suspense } from "react";
 import placeholder from "../img/foodPlaceholder.jpg";
 import styles from "./recipeForm.module.css";
 import rstyles from "./recipe.module.css";
-import { button, white } from "../commonStyles.module.css";
 import { db } from "../firebase";
-import { collection, doc } from "firebase/firestore";
+import { doc } from "firebase/firestore";
 import { UserContext } from "../App.js";
 import { useParams } from "react-router-dom";
 import { useDocumentOnce } from 'react-firebase-hooks/firestore';
