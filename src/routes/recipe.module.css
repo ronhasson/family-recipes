@@ -48,6 +48,10 @@
     box-sizing: border-box;
 }
 
+.time>p :first-of-type {
+    margin-inline-start: 0.3em;
+}
+
 .ingreds {
     display: flex;
     flex-direction: column;

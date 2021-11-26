@@ -69,15 +69,15 @@ function RecipeForm() {
                                     <img src={timerImg} alt="time" />
                                     <p>
                                         Prep:
-                                        {value.data().prep[0] > 0 && <span> {value.data().prep[0]} days, </span>}
+                                        {value.data().prep[0] > 0 && <span>{value.data().prep[0]} days, </span>}
                                         {value.data().prep[1] > 0 && <span>{value.data().prep[1]} hours, </span>}
-                                        {!(value.data().prep[0] + value.data().prep[0] !== 0 && value.data().prep[2] === 0) && <span>{value.data().prep[2]} min </span>}
+                                        <span>{value.data().prep[2]} min </span>
                                     </p>
                                     <p>
                                         Cooking:
-                                        {value.data().cook[0] > 0 && <span> {value.data().cook[0]} days, </span>}
-                                        {value.data().cook[1] > 0 && <span>{value.data().cook[1]} hours, </span>}
-                                        {!(value.data().cook[0] + value.data().cook[0] !== 0 && value.data().cook[2] === 0) && <span>{value.data().cook[2]} min </span>}
+                                        {value.data().cook[0] > 0 && <span>{value.data().cook[0]} days,</span>}
+                                        {value.data().cook[1] > 0 && <span>{value.data().cook[1]} hours,</span>}
+                                        <span> {value.data().cook[2]} min </span>
                                     </p>
                                 </div>
                                 <h3>Ingredients</h3>
@@ -93,7 +93,7 @@ function RecipeForm() {
                                 <h3>Directions</h3>
                                 <div>{value.data().instructions.map((ins, i) => {
                                     return (
-                                        <div className={rstyles.step}>
+                                        <div key={"ing" + ins + i} className={rstyles.step}>
                                             {value.data().instructions.length > 1 && <span>{i + 1}</span>}
                                             <p dangerouslySetInnerHTML={{ __html: ins }}></p>
                                         </div>
