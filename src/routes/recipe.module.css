@@ -1,0 +1,93 @@
+.content {
+    min-height: 30em;
+}
+
+.content h1 {
+    margin-top: 0;
+    margin-bottom: 0.4em;
+}
+
+.tags {
+    display: flex;
+    gap: 0.4em;
+    padding: 0 0.5em;
+    flex-wrap: wrap;
+}
+
+.tags>span {
+    background-color: #0052cc;
+    color: white;
+    padding: 0.3em 0.5em;
+    border-radius: 6px;
+    font-size: 0.8em;
+    user-select: none;
+}
+
+.recipeCont {
+    width: 75%;
+    margin: 0 auto;
+    text-align: start;
+}
+
+.recipeCont h3 {
+    margin-bottom: 0.2em;
+}
+
+.time {
+    display: grid;
+    grid-template: 2em 2em/ 4em 1fr;
+    grid-template-areas: "img none"
+        "img none";
+    align-items: center;
+}
+
+.time>img {
+    height: 100%;
+    padding: 0.6em;
+    grid-area: img;
+    box-sizing: border-box;
+}
+
+.ingreds {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.ingreds>label {
+    line-height: 1.4em;
+    display: flex;
+    align-items: center;
+}
+
+.ingreds input {
+    margin-inline-end: 0.7em;
+}
+
+.ingreds label input:checked+span {
+    font-style: italic;
+    font-size: 95%;
+    opacity: 0.8;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+    margin-bottom: 1em;
+}
+
+.step>span {
+    padding: 0.3em;
+    width: 1em;
+    font-weight: lighter;
+    text-align: center;
+    user-select: none;
+}
+
+.step>p {
+    flex-grow: 1;
+    margin: 0;
+    border-inline-start: 2px inset rgba(0, 0, 0, 0.1);
+    padding-inline-start: 0.4em;
+}
