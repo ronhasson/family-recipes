@@ -1,4 +1,4 @@
-import { useRef, useEffect, useContext, Suspense } from "react";
+import { useRef, useEffect, useContext, Suspense, useState } from "react";
 import placeholder from "../img/foodPlaceholder.jpg";
 import styles from "./recipeForm.module.css";
 import rstyles from "./recipe.module.css";
@@ -15,14 +15,40 @@ function RecipeForm() {
     let urlParams = useParams();
     // console.log(urlParams);
     const [value, loading, error] = useDocumentOnce(doc(db, "recipes", urlParams.id));
+    const [rtl, setRtl] = useState(false);
     let v = useRef();
 
     useEffect(() => {
         if (value) {
             v.current = value.data();
             console.log(v);
+            setRtl(/[\u0590-\u07FF\u200F\u202B\u202E\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(value.data().name));
         }
     }, [value]);
+
+    let [lang, setLang] = useState();
+    useEffect(() => {
+        setLang((rtl) ? he : en);
+    }, [rtl]);
+    const he = {
+        prep: "הכנה",
+        cook: "בישול",
+        day: "ימים",
+        hour: "שעות",
+        min: "דקות",
+        ing: "רכיבים",
+        direc: "הוראות"
+    }
+    const en = {
+        prep: "Prep",
+        cook: "Cooking",
+        day: "days",
+        hour: "hours",
+        min: "min",
+        ing: "Ingredients",
+        direc: "Directions"
+    }
+
 
     const mainRef = useRef();
     const imageRef = useRef();
@@ -53,7 +79,7 @@ function RecipeForm() {
             {error && <h2>{error.code}</h2>}
             {value &&
                 <Suspense fallback={<Loading />}>
-                    <div ref={mainRef} className={styles.formContainer} >
+                    <div dir={(rtl) ? "rtl" : ""} ref={mainRef} className={styles.formContainer} >
                         <img ref={imageRef} src={placeholder} alt="" />
                         <div className={rstyles.content}>
                             <div className={rstyles.tags}>
@@ -63,23 +89,23 @@ function RecipeForm() {
                             </div>
                             <h1>{value.data().name}</h1>
                             <div className={rstyles.recipeCont}>
-                                <p>{value.data().desc}</p>
+                                <p dangerouslySetInnerHTML={{ __html: value.data().desc }}></p>
                                 <div className={rstyles.time}>
                                     <img src={timerImg} alt="time" />
                                     <p>
-                                        Prep:
-                                        {value.data().prep[0] > 0 && <span>{value.data().prep[0]} days, </span>}
-                                        {value.data().prep[1] > 0 && <span>{value.data().prep[1]} hours, </span>}
-                                        <span>{value.data().prep[2]} min </span>
+                                        {lang.prep}:
+                                        {value.data().prep[0] > 0 && <span>{value.data().prep[0]} {lang.day}, </span>}
+                                        {value.data().prep[1] > 0 && <span>{value.data().prep[1]} {lang.hour}, </span>}
+                                        <span>{value.data().prep[2]} {lang.min} </span>
                                     </p>
                                     <p>
-                                        Cooking:
-                                        {value.data().cook[0] > 0 && <span>{value.data().cook[0]} days,</span>}
-                                        {value.data().cook[1] > 0 && <span>{value.data().cook[1]} hours,</span>}
-                                        <span> {value.data().cook[2]} min </span>
+                                        {lang.cook}:
+                                        {value.data().cook[0] > 0 && <span>{value.data().cook[0]} {lang.day},</span>}
+                                        {value.data().cook[1] > 0 && <span>{value.data().cook[1]} {lang.hour},</span>}
+                                        <span>{value.data().cook[2]} {lang.min} </span>
                                     </p>
                                 </div>
-                                <h3>Ingredients</h3>
+                                <h3>{lang.ing}</h3>
                                 <div className={rstyles.ingreds}>
                                     {value.data().ingredients.map((ing, i) => {
                                         return (
@@ -89,7 +115,7 @@ function RecipeForm() {
                                         )
                                     })}
                                 </div>
-                                <h3>Directions</h3>
+                                <h3>{lang.direc}</h3>
                                 <div>{value.data().instructions.map((ins, i) => {
                                     return (
                                         <div key={"ing" + ins + i} className={rstyles.step}>

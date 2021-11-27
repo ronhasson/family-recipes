@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import "./recipeCard.css"
+import "./recipeCard.css";
+import sanitizeHtml from "sanitize-html";
 
 function RecipeCard(props) {
     const title = props.title || "Roasted duck";
@@ -14,12 +15,20 @@ function RecipeCard(props) {
         }
     }
 
+    const sanitizeConf = {
+        allowedTags: ["div", "span"],
+        transformTags: {
+            'div': 'span'
+        }
+    };
+    const sanitized = sanitizeHtml(desc, sanitizeConf);
+
     return (
         <div onClick={sendTo} className="recipeCard">
             <div className="cardImage"></div>
             <div className="cardText">
                 <h3>{title}</h3>
-                <p>{desc}</p>
+                <p dangerouslySetInnerHTML={{ __html: sanitized }}></p>
             </div>
         </div>
     );

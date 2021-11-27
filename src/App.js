@@ -61,6 +61,7 @@ function App() {
               <Route path="/groups" element={<Groups />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/editrecipe" element={<RecipeForm />} />
+              <Route path="/editrecipe/:id" element={<RecipeForm />} />
               <Route path="/recipe/:id" element={<Recipe />} />
             </Routes>
           </div>

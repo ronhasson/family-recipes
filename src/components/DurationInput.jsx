@@ -80,10 +80,17 @@ const DurationTrack = ({ numbers, qualifier, border, onChange, num }) => {
         ));
     };
 
+    const [saveme, setSaveme] = useState(num);
     useEffect(() => {
         setValue(num);
         scroolTo(num);
-    }, [num])
+        // console.log(`num: ${num}, value:${value}, save:${saveme}`);
+        if (saveme !== num) {
+            //the dom takes more time to render than useEffect call,
+            //without the setTimeout it wont scroll to the value
+            setTimeout(() => { setSaveme(num) }, 1000);
+        }
+    }, [num, saveme]);
 
     function scroolTo(v) {
         list.current.childNodes[v].scrollIntoView();
