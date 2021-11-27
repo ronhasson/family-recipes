@@ -32,6 +32,11 @@ function InstructionsInput(props) {
         setInstructions(newInstructions);
         emit(newInstructions);
     }
+
+    useEffect(() => {
+        setInstructions(props.value);
+    }, [props.value])
+
     function addStep() {
         setInstructions([...instructions, ""]);
     }

@@ -16,6 +16,13 @@ function DurationInput(props) {
     // const _setDays = (value) => { setDays(value); onChange([value, hours, minutes]) }
     // const _setHours = (value) => { setHours(value); onChange([days, value, minutes]) }
     // const _setMinutes = (value) => { setMinutes(value); onChange([days, hours, value]) }
+    useEffect(() => {
+        if (props.value !== [days, hours, minutes]) {
+            setDays(props.value[0]);
+            setHours(props.value[1]);
+            setMinutes(props.value[2]);
+        }
+    }, [props.value]);
 
     return (
         <>
@@ -25,23 +32,26 @@ function DurationInput(props) {
                     numbers={[...Array(31).keys()]}
                     qualifier="day(s)"
                     onChange={value => setDays(value)}
+                    num={days}
                 />
                 <DurationTrack
                     numbers={[...Array(24).keys()]}
                     qualifier="hour(s)"
                     onChange={value => setHours(value)}
+                    num={hours}
                 />
                 <DurationTrack
                     numbers={[...Array(60).keys()]}
                     qualifier="min(s)"
                     onChange={value => setMinutes(value)}
+                    num={minutes}
                 />
             </div>
         </>
     );
 }
 
-const DurationTrack = ({ numbers, qualifier, border, onChange }) => {
+const DurationTrack = ({ numbers, qualifier, border, onChange, num }) => {
     const list = useRef(null);
     const [value, setValue] = useState(0);
     useEffect(() => {
@@ -70,6 +80,14 @@ const DurationTrack = ({ numbers, qualifier, border, onChange }) => {
         ));
     };
 
+    useEffect(() => {
+        setValue(num);
+        scroolTo(num);
+    }, [num])
+
+    function scroolTo(v) {
+        list.current.childNodes[v].scrollIntoView();
+    }
 
     function durationScrollBy(delta) {
         let i = Math.max(delta + value, 0);

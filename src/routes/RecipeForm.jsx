@@ -11,9 +11,11 @@ import uploadImage from "../img/upload.svg";
 import { db } from "../firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { UserContext } from "../App.js";
+import { useNavigate } from "react-router-dom";
 
 function RecipeForm() {
     const user = useContext(UserContext);
+    let navigate = useNavigate();
 
     const [title, setTitle] = useState("");
     const [desc, setDesc] = useState("");
@@ -80,6 +82,7 @@ function RecipeForm() {
             instructions: instructions
         });
         console.log("Document written with ID: ", docRef.id);
+        navigate("/recipe/" + docRef.id);
     }
 
     function disableEnter(e) {
@@ -103,12 +106,12 @@ function RecipeForm() {
                 <TagsInput id="ingred" ingred selectedTags={selectedIngredients} tags={ingredients} />
                 <div className={styles.gridDurationDiv}>
                     <label htmlFor="prepTime">Prep time</label>
-                    <DurationInput id="prepTime" onChange={setPrep} />
+                    <DurationInput id="prepTime" onChange={setPrep} value={prep} />
                     <label htmlFor="cookTime">Cook time</label>
-                    <DurationInput id="cookTime" onChange={setCook} />
+                    <DurationInput id="cookTime" onChange={setCook} value={cook} />
                 </div>
                 <label htmlFor="instr">Instructions</label>
-                <InstructionsInput id="instr" onChange={setInstructions} />
+                <InstructionsInput id="instr" onChange={setInstructions} value={instructions} />
                 <hr className={styles.hr} />
                 <div><input type="checkbox" />Publicly avilable with link (TODO)</div>
                 <label htmlFor="">Share with</label>

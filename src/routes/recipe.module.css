@@ -27,6 +27,9 @@
     width: 75%;
     margin: 0 auto;
     text-align: start;
+    line-height: 1.5rem;
+    text-rendering: optimizeLegibility;
+    text-shadow: 0 0 0px rgb(0 0 0 / 40%);
 }
 
 .recipeCont h3 {
@@ -84,6 +87,7 @@
 .step>span {
     padding: 0.3em;
     width: 1em;
+    min-width: 1em;
     font-weight: lighter;
     text-align: center;
     user-select: none;

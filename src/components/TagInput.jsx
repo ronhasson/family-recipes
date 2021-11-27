@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import tstyles from "./tagInput.module.css";
 import istyles from "./tagInput_ingred.module.css";
 
@@ -21,6 +21,18 @@ function TagsInput(props) {
         }
     };
 
+    useEffect(() => {
+        setTags(props.tags);
+    }, [props.tags])
+
+    const handleBlur = (e) => {
+        console.log(e);
+        if (e.target.value) {
+            e.target.focus();
+            addTags(e);
+        }
+    };
+
     let inputText = (props.ingred) ? "Press enter to add ingredient" : "Press enter to add tags";
 
     return (
@@ -40,6 +52,7 @@ function TagsInput(props) {
             <input
                 type="text"
                 onKeyUp={event => event.key === "Enter" ? addTags(event) : null}
+                onBlur={handleBlur}
                 placeholder={inputText}
             />
         </div>
