@@ -2,7 +2,7 @@ import { useRef, useEffect, useState, useContext } from "react";
 import DurationInput from "../components/DurationInput";
 import InstructionsInput from "../components/InstructionsInput";
 import TagsInput from "../components/TagInput";
-import placeholder from "../img/foodPlaceholder.jpg";
+import placeholder from "../img/foodPlaceholder.webp";
 import styles from "./recipeForm.module.css";
 import ContentEditable from 'react-contenteditable';
 import sanitizeHtml from "sanitize-html";

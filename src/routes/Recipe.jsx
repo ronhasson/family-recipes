@@ -1,5 +1,5 @@
 import { useRef, useEffect, useContext, Suspense, useState } from "react";
-import placeholder from "../img/foodPlaceholder.jpg";
+import placeholder from "../img/foodPlaceholder.webp";
 import styles from "./recipeForm.module.css";
 import rstyles from "./recipe.module.css";
 import { db } from "../firebase";
