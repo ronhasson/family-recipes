@@ -5,6 +5,7 @@ import UserDropdown from "./userDropdown.jsx";
 import "./header.css";
 import addImg from "../img/add.svg";
 import editImg from "../img/edit.svg";
+import deleteImg from "../img/delete.svg";
 import { useEffect, useState } from "react";
 
 export default function Header(props) {
@@ -27,6 +28,7 @@ export default function Header(props) {
             <div style={{ flexGrow: 1 }}></div> {/*spacer*/}
             {location.pathname === "/" && <nav className="actionBar"><NavLink to="/editrecipe"><img src={addImg} alt="Add recipe" /></NavLink></nav>}
             {fLoc === "recipe" && <nav className="actionBar"><NavLink to={"/editrecipe/" + lLoc}><img src={editImg} alt="Edit recipe" /></NavLink></nav>}
+            {(fLoc === "editrecipe" && lLoc) && <nav className="actionBar"><NavLink to={"/deleterecipe/" + lLoc}><img src={deleteImg} alt="Delete recipe" /></NavLink></nav>}
             <UserDropdown render={<Avatar mine clickable />} />
         </div >
     );

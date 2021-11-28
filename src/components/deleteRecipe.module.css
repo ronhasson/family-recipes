@@ -1,0 +1,10 @@
+.main {
+    padding: 1.7em;
+    text-align: center;
+}
+
+.main>img {
+    display: block;
+    height: 15em;
+    margin: 2.3em auto;
+}

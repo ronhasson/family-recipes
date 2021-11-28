@@ -12,6 +12,7 @@ import Loading from './components/loading';
 import LoginScreen from './LoginScreen';
 import RecipeForm from './routes/RecipeForm';
 import Recipe from './routes/Recipe';
+import DeleteRecipe from './components/DeleteRecipe';
 
 export const UserContext = createContext();
 
@@ -62,6 +63,7 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/editrecipe" element={<RecipeForm />} />
               <Route path="/editrecipe/:id" element={<RecipeForm />} />
+              <Route path="/deleterecipe/:id" element={<DeleteRecipe />} />
               <Route path="/recipe/:id" element={<Recipe />} />
             </Routes>
           </div>
