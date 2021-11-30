@@ -7,7 +7,7 @@ function GroupAvatar(props) {
     style.fontSize = (props.size) ? props.size : '';
     return (
         <div className="groupAvatar">
-            <Avatar size={props.size} rand />
+            <Avatar size={props.size} rand={props.name} />
             <span style={style}>{props.name}</span>
         </div>
     );

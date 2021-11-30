@@ -5,18 +5,20 @@ import "./recipes.css";
 import { db } from "../firebase";
 import { collection, query, where } from "firebase/firestore";
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { UserContext } from "../App.js";
+import { UserContext, GroupContext } from "../App.js";
 import { useContext } from "react";
 
 export default function Recipes() {
     const user = useContext(UserContext);
+    const groups = useContext(GroupContext);
+
     const q = query(collection(db, "recipes"), where("owner", "==", user.uid));
     const [snapshot, loading, error] = useCollection(q);
-    console.log(snapshot);
-    let groups = [];
-    for (var i = 0; i < 4; i++) {
-        groups.push(<GroupAvatar name="בדיקה בדוק" tColor="white" key={i} />);
-    }
+    // console.log(snapshot);
+    // let groups = [];
+    // for (var i = 0; i < 4; i++) {
+    //     groups.push(<GroupAvatar name="בדיקה בדוק" tColor="white" key={i} />);
+    // }
     // let cards = [];
     // for (var j = 0; j < 10; j++) {
     //     cards.push(<RecipeCard key={j} />);
@@ -26,9 +28,13 @@ export default function Recipes() {
             <div className="groupBar">
                 <span className="allFilter">All</span>
                 <Avatar mine />
-                <GroupAvatar name="משפחת חסון" tColor="white" />
-                <GroupAvatar name="הג'ינג'ית וארבעת המופלאים" tColor="white" />
-                {groups}
+                {/* <GroupAvatar name="משפחת חסון" tColor="white" />
+                <GroupAvatar name="הג'ינג'ית וארבעת המופלאים" tColor="white" /> */}
+                {groups && groups.docs.map((doc, i) => {
+                    return (
+                        <GroupAvatar name={doc.data().name} tColor="white" key={i} />
+                    )
+                })}
             </div>
             <div className="recipesWindow">
                 <div className="recipesHeader">

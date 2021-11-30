@@ -1,17 +1,31 @@
 import GroupAvatar from "../components/groupAvatar";
-import "./groups.css"
+import "./groups.css";
+import { db } from "../firebase";
+import { collection, query, where } from "firebase/firestore";
+import { useCollection } from 'react-firebase-hooks/firestore';
+import { UserContext, GroupContext } from "../App.js";
+import { useContext } from "react";
+import { NavLink } from "react-router-dom";
 
 export default function Groups() {
-    let groups = [];
-    for (var i = 0; i < 7; i++) {
-        groups.push(<GroupAvatar size="170%" name="בדיקה בדוק" key={i} />);
-    }
+    // const user = useContext(UserContext);
+    const groups = useContext(GroupContext);
+    // const q = query(collection(db, "groups"), where("members", "array-contains", user.uid));
+    // const [snapshot, loading, error] = useCollection(q);
+    // console.log(snapshot);
+    // console.log(error);
+    console.log(groups);
     return (
         <main style={{ padding: "1rem 0" }}>
             <h2>Groups</h2>
             <div className="groupContainer">
-                <GroupAvatar size="170%" name="משפחת חסון" />
-                {groups}
+                {/* <GroupAvatar size="170%" name="משפחת חסון" /> */}
+                {groups && groups.docs.map((doc, i) => {
+                    return (
+                        <GroupAvatar size="170%" name={doc.data().name} key={i} />
+                    )
+                })}
+                {groups.docs.length < 9 && <button>Create Group</button>}
             </div>
         </main>
     );
