@@ -6,6 +6,7 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 import { UserContext, GroupContext } from "../App.js";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import addImg from "../img/add.svg";
 
 export default function Groups() {
     // const user = useContext(UserContext);
@@ -25,7 +26,7 @@ export default function Groups() {
                         <GroupAvatar size="170%" name={doc.data().name} key={i} />
                     )
                 })}
-                {groups.docs.length < 9 && <button>Create Group</button>}
+                {groups.docs.length < 9 && <button className="groupAdd"><img src={addImg} alt="" /><span>Create Group</span></button>}
             </div>
         </main>
     );

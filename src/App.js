@@ -1,5 +1,5 @@
 import './App.css';
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Recipes from './routes/Recipes.jsx';
 import Groups from './routes/Groups';
 import Header from './components/header';
@@ -24,6 +24,8 @@ function App() {
   let [q, setQ] = useState();
   const [groupSnapshot, gLoading, gError] = useCollection(q);
 
+  let location = useLocation();
+
   function resize() {
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -36,6 +38,10 @@ function App() {
       window.removeEventListener("resize", resize);
     }
   }, []);
+
+  useEffect(() => {
+    resize();
+  }, [location, user, groupSnapshot]);
 
   useEffect(() => {
     if (user) {
@@ -84,7 +90,7 @@ function App() {
     );
   } else {
     if (loading || gLoading) {
-      return (<Loading />);
+      return (<div className="App"><Loading /></div>);
     }
     if (error) {
       console.log(error);

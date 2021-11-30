@@ -4,4 +4,36 @@
     gap: 2em;
     justify-content: center;
     padding: 0.7em;
+    /* min-width: 27em; */
+}
+
+.groupAdd {
+    background-color: hsl(0deg 0% 98%);
+    border: 1px solid hsl(0deg 0% 75%);
+    padding: 1em;
+    border-radius: 8px;
+    /* width: max-content; */
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.groupAdd:hover {
+    background-color: hsl(0deg 0% 94%);
+}
+
+.groupAdd>span {
+    display: block;
+    padding-top: 0.5rem;
+    font-size: 1.3em;
+}
+
+@media (max-width:481px) {
+    /*was 551px*/
+
+    .groupContainer {
+        /* height: fit-content; */
+        font-size: 85%;
+        /* height: calc(var(--vh, 1vh) * 100); */
+        /* background-color: red; */
+    }
 }

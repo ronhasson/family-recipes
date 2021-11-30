@@ -11,6 +11,7 @@ body {
   text-align: center;
   height: 100%;
   height: calc(var(--vh, 1vh) * 100);
+  min-width: 27em;
 }
 
 * {
