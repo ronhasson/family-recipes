@@ -14,6 +14,7 @@ import LoginScreen from './LoginScreen';
 import RecipeForm from './routes/RecipeForm';
 import Recipe from './routes/Recipe';
 import DeleteRecipe from './components/DeleteRecipe';
+import Group from './routes/Group';
 
 
 export const UserContext = createContext();
@@ -77,6 +78,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Recipes />} />
                 <Route path="/groups" element={<Groups />} />
+                <Route path="/group/:id" element={<Group />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/editrecipe" element={<RecipeForm />} />
                 <Route path="/editrecipe/:id" element={<RecipeForm />} />

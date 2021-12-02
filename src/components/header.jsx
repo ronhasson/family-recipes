@@ -1,4 +1,4 @@
-import { NavLink, useLocation, useParams } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import logo from "../logo_tiny.webp";
 import Avatar from "./avatar.jsx";
 import UserDropdown from "./userDropdown.jsx";
