@@ -1,0 +1,38 @@
+.member,.owner{
+    text-transform: capitalize;
+}
+.owner{
+    font-size: 1.1em;
+    padding: 0.3em 0.5em;
+    margin: 0.3em;
+    display: inline-block;
+}
+.title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.titleContainer input{
+    font-size: 2em;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+}
+.titleContainer{
+    position: relative;
+    min-height: 2.5em;
+}
+.titleContainer span{
+    font-size: 2em;
+    visibility: hidden;
+}
+.titleContainer input:disabled{
+    color: black;
+    border: none;
+}
+.membersListTitle{
+    margin-bottom: 0.5em;
+    text-decoration: underline;
+}
