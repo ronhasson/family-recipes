@@ -19,11 +19,14 @@ import Group from './routes/Group';
 
 export const UserContext = createContext();
 export const GroupContext = createContext();
+export const InvitesContext = createContext();
 
 function App() {
   const [user, loading, error] = useAuthState(auth);
   let [q, setQ] = useState();
   const [groupSnapshot, gLoading, gError] = useCollection(q);
+  let [inviteQ, setInvQ] = useState();
+  const [invitesSnapshot, iLoading, iError] = useCollection(inviteQ);
 
   let location = useLocation();
 
@@ -65,6 +68,7 @@ function App() {
   useEffect(() => {
     if (user) {
       setQ(query(collection(db, "groups"), where("members", "array-contains", user.uid)));
+      setInvQ(collection(db, "users", user.uid, "invites"));
     }
   }, [user])
 
@@ -73,25 +77,27 @@ function App() {
       <Suspense fallback={<Loading />}>
         <UserContext.Provider value={user}>
           <GroupContext.Provider value={groupSnapshot}>
-            <div className="App">
-              <Header />
-              <Routes>
-                <Route path="/" element={<Recipes />} />
-                <Route path="/groups" element={<Groups />} />
-                <Route path="/group/:id" element={<Group />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/editrecipe" element={<RecipeForm />} />
-                <Route path="/editrecipe/:id" element={<RecipeForm />} />
-                <Route path="/deleterecipe/:id" element={<DeleteRecipe />} />
-                <Route path="/recipe/:id" element={<Recipe />} />
-              </Routes>
-            </div>
+            <InvitesContext.Provider value={invitesSnapshot}>
+              <div className="App">
+                <Header />
+                <Routes>
+                  <Route path="/" element={<Recipes />} />
+                  <Route path="/groups" element={<Groups />} />
+                  <Route path="/group/:id" element={<Group />} />
+                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/editrecipe" element={<RecipeForm />} />
+                  <Route path="/editrecipe/:id" element={<RecipeForm />} />
+                  <Route path="/deleterecipe/:id" element={<DeleteRecipe />} />
+                  <Route path="/recipe/:id" element={<Recipe />} />
+                </Routes>
+              </div>
+            </InvitesContext.Provider>
           </GroupContext.Provider>
         </UserContext.Provider>
       </Suspense>
     );
   } else {
-    if (loading || gLoading) {
+    if (loading || gLoading || iLoading) {
       return (<div className="App"><Loading /></div>);
     }
     if (error) {
@@ -99,6 +105,9 @@ function App() {
     }
     if (gError) {
       console.log(gError);
+    }
+    if (iError) {
+      console.log(iError);
     }
     return (<LoginScreen />);
   }

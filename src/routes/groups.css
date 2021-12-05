@@ -37,3 +37,11 @@
         /* background-color: red; */
     }
 }
+
+.invitesContainer {
+    margin-top: 2em;
+}
+
+.invitesContainer h3 {
+    margin-bottom: 0.5em;
+}

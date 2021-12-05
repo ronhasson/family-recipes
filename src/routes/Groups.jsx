@@ -3,20 +3,23 @@ import "./groups.css";
 import { db } from "../firebase";
 import { collection, query, where, addDoc, serverTimestamp } from "firebase/firestore";
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { UserContext, GroupContext } from "../App.js";
+import { UserContext, GroupContext, InvitesContext } from "../App.js";
 import { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import addImg from "../img/add.svg";
+import cStyles from "../commonStyles.module.css";
 
 export default function Groups() {
     const user = useContext(UserContext);
     const groups = useContext(GroupContext);
+    const invites = useContext(InvitesContext);
     let navigate = useNavigate();
     // const q = query(collection(db, "groups"), where("members", "array-contains", user.uid));
     // const [snapshot, loading, error] = useCollection(q);
     // console.log(snapshot);
     // console.log(error);
     console.log(groups);
+    console.log(invites)
 
     async function createGroup() {
         let docRef;
@@ -46,6 +49,19 @@ export default function Groups() {
                 })}
                 {groups.docs.length < 9 && <button className="groupAdd" onClick={createGroup}><img src={addImg} alt="" /><span>Create Group</span></button>}
             </div>
+            {invites && invites.docs.length > 0 && <div className="invitesContainer">
+                <h3>Invites</h3>
+                <div style={{ marginBottom: "1em" }}>
+                    {invites.docs.map((inv, i) => {
+                        return (
+                            <div>
+                                <div>{inv.data().gName}<span style={{ margin: "0 1em", fontStyle: "italic", color: "lightslategrey" }}>by</span>{inv.data().by}</div>
+                                <div><button className={[cStyles.button, cStyles.white, cStyles.inlineFlex, cStyles.bGreen].join(" ")}>Join</button>/<button className={[cStyles.button, cStyles.white, cStyles.inlineFlex, cStyles.bRed].join(" ")}>Delete</button></div>
+                            </div>
+                        )
+                    })}
+                </div>
+            </div>}
         </main>
     );
 }

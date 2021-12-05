@@ -32,7 +32,7 @@
 
 .white {
     color: white;
-    background: hsl(216deg 75% 55%);
+    background: var(--bColor, hsl(216deg 75% 55%));
 }
 
 .white>img {
@@ -41,4 +41,17 @@
 
 .white:hover {
     background-color: var(--bColor, hsl(222deg 100% 59%)) !important;
+}
+
+.bGreen {
+    --bColor: hsl(120deg 90% 50%)
+}
+
+.bRed {
+    --bColor: hsl(12deg 90% 50%)
+}
+
+.inlineFlex {
+    display: inline-flex !important;
+    margin: 0.5em;
 }
