@@ -33,6 +33,12 @@
     margin-top: 1em;
 }
 
+.formContainer input:focus-visible {
+    outline: 1px solid #0052cc;
+    border-radius: 6px;
+    border-color: transparent;
+}
+
 .titleInput {
     align-self: center;
     font-size: 130%;
@@ -67,6 +73,10 @@
 
 .contentEditable * * {
     unicode-bidi: plaintext;
+}
+
+.contentEditable:focus-visible {
+    outline: 1px solid #0052cc;
 }
 
 .gridDurationDiv {

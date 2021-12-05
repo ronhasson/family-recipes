@@ -1,18 +1,32 @@
-.member,.owner{
+.groupContainer input:focus-visible {
+    outline: 1px solid #0052cc;
+    border-radius: 6px;
+    border-color: transparent;
+}
+
+.member,
+.owner {
     text-transform: capitalize;
 }
-.owner{
+
+.owner {
     font-size: 1.1em;
     padding: 0.3em 0.5em;
     margin: 0.3em;
     display: inline-block;
 }
-.title{
+
+.member {
+    display: block;
+}
+
+.title {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.titleContainer input{
+
+.titleContainer input {
     font-size: 2em;
     position: absolute;
     width: 100%;
@@ -20,19 +34,25 @@
     bottom: 0;
     left: 0;
 }
-.titleContainer{
+
+.titleContainer {
     position: relative;
     min-height: 2.5em;
 }
-.titleContainer span{
+
+.titleContainer span {
     font-size: 2em;
     visibility: hidden;
 }
-.titleContainer input:disabled{
+
+.titleContainer input:disabled {
     color: black;
     border: none;
+    background: none;
 }
-.membersListTitle{
+
+.membersListTitle {
     margin-bottom: 0.5em;
     text-decoration: underline;
+    margin-top: 0.7em;
 }
