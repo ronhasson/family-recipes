@@ -1,19 +1,22 @@
 import GroupAvatar from "../components/groupAvatar";
 import "./groups.css";
 import { db } from "../firebase";
-import { collection, query, where, addDoc, serverTimestamp } from "firebase/firestore";
+import { collection, query, where, addDoc, serverTimestamp, doc, arrayUnion, updateDoc, deleteDoc } from "firebase/firestore";
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { UserContext, GroupContext, InvitesContext } from "../App.js";
 import { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import addImg from "../img/add.svg";
 import cStyles from "../commonStyles.module.css";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 export default function Groups() {
     const user = useContext(UserContext);
     const groups = useContext(GroupContext);
     const invites = useContext(InvitesContext);
     let navigate = useNavigate();
+    const MySwal = withReactContent(Swal);
     // const q = query(collection(db, "groups"), where("members", "array-contains", user.uid));
     // const [snapshot, loading, error] = useCollection(q);
     // console.log(snapshot);
@@ -36,7 +39,24 @@ export default function Groups() {
         } finally {
         }
     }
-
+    async function joinGroup(id) {
+        const groupRef = doc(db, "groups", id);
+        try {
+            await updateDoc(groupRef, {
+                members: arrayUnion(user.uid)
+            });
+            await deleteDoc(doc(db, "users", user.uid, "invites", id));
+        } catch (error) {
+            MySwal.fire("Error", error, "error");
+        }
+    }
+    async function deleteInvite(id) {
+        try {
+            await deleteDoc(doc(db, "users", user.uid, "invites", id));
+        } catch (error) {
+            MySwal.fire("Error", error, "error");
+        }
+    }
     return (
         <main style={{ padding: "1rem 0" }}>
             <h2>Groups</h2>
@@ -54,9 +74,9 @@ export default function Groups() {
                 <div style={{ marginBottom: "1em" }}>
                     {invites.docs.map((inv, i) => {
                         return (
-                            <div>
+                            <div key={"inv" + i}>
                                 <div>{inv.data().gName}<span style={{ margin: "0 1em", fontStyle: "italic", color: "lightslategrey" }}>by</span>{inv.data().by}</div>
-                                <div><button className={[cStyles.button, cStyles.white, cStyles.inlineFlex, cStyles.bGreen].join(" ")}>Join</button>/<button className={[cStyles.button, cStyles.white, cStyles.inlineFlex, cStyles.bRed].join(" ")}>Delete</button></div>
+                                <div><button onClick={() => { joinGroup(inv.id) }} className={[cStyles.button, cStyles.white, cStyles.inlineFlex, cStyles.bGreen].join(" ")}>Join</button>/<button onClick={() => { deleteInvite(inv.id) }} className={[cStyles.button, cStyles.white, cStyles.inlineFlex, cStyles.bRed].join(" ")}>Delete</button></div>
                             </div>
                         )
                     })}

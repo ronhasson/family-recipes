@@ -56,3 +56,32 @@
     text-decoration: underline;
     margin-top: 0.7em;
 }
+
+.editBtn {
+    opacity: 0.5;
+    cursor: pointer;
+    position: relative;
+    left: 1em;
+    top: 0.1em;
+}
+
+.editBtn:hover {
+    opacity: 1;
+}
+
+.editBtn:active {
+    filter: brightness(0.9) invert(.6) sepia(1.5) hue-rotate(166deg) saturate(300%);
+}
+
+.doneEditBtn {
+    cursor: pointer;
+    position: relative;
+    left: 1em;
+    top: 0.1em;
+    filter: brightness(0.9) invert(.5) sepia(1.5) hue-rotate(70deg) saturate(300%);
+
+}
+
+.doneEditBtn:active {
+    filter: brightness(0.9) invert(.6) sepia(1.5) hue-rotate(70deg) saturate(300%);
+}

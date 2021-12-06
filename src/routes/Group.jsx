@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Avatar from "../components/avatar";
 import { GroupContext } from "../App.js";
 import { useContext, useEffect, useState } from "react";
@@ -9,22 +9,29 @@ import cStyles from "../commonStyles.module.css";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { UserContext } from "../App.js";
-import { collection, doc, getDocs, query, setDoc, where } from "@firebase/firestore";
+import { arrayRemove, collection, deleteDoc, doc, getDocs, query, setDoc, updateDoc, where } from "@firebase/firestore";
 import { db } from "../firebase";
+import editImg from "../img/edit.svg";
+import checkImg from "../img/check.svg";
+import { div } from "prelude-ls";
 
 function Group() {
     let urlParams = useParams();
     const user = useContext(UserContext);
     const groups = useContext(GroupContext);
     const [group, setGroup] = useState(groups.docs.filter(doc => doc.id === urlParams.id)[0]);
-    const [groupName, setGName] = useState(group.data().name);
+    const [groupName, setGName] = useState((group) ? group.data().name : "");
     const [members, setMembers] = useState({});
     const [inputEmail, setInputEmail] = useState("");
+    const [titleDisabled, setTDisabled] = useState(true);
     const titleInputRef = useRef();
+    let navigate = useNavigate();
     const MySwal = withReactContent(Swal);
 
     useEffect(() => {
-        setGName(group.data().name);
+        if (group) {
+            setGName(group.data().name);
+        }
     }, [group]);
     useEffect(() => {
         setGroup(groups.docs.filter(doc => doc.id === urlParams.id)[0]);
@@ -38,7 +45,9 @@ function Group() {
         setMembers(m)
     }
     useEffect(() => {
-        getmembers();
+        if (group) {
+            getmembers();
+        }
         // console.log(members);
     }, [group]);
     useEffect(() => {
@@ -81,25 +90,93 @@ function Group() {
             // console.log("No such document! - user");
         }
     }
-    return (
-        <div className={styles.groupContainer}>
-            <h2 className={styles.title}><Avatar size="120%" rand={groupName + "1234567890"} /><div className={styles.titleContainer}><input ref={titleInputRef} disabled type="text" onChange={(e) => { setGName(e.target.value) }} value={groupName} /><span>{groupName}</span></div></h2>
-            <span className={styles.owner}>👑 {Object.keys(members).length > 0 && members[group.data().owner].name}</span>
-            <div style={{ margin: "1em" }}><input value={inputEmail} onChange={(e) => { setInputEmail(e.target.value) }} style={{ padding: "0.3em" }} type="email" placeholder="invite@email.com" /><button onClick={sendInvite} style={{ display: "inline-flex", margin: "0 0.5em" }} className={cStyles.button}>Send invite</button></div>
-            <h4 className={styles.membersListTitle}>Members</h4>
-            <div>
-                {Object.keys(members).length > 0 && Object.keys(members).map((key, i) => {
-                    let member = members[key];
-                    // console.log(member);
-                    // console.log(members);
-                    console.log("hi", member);
-                    return (
-                        <span className={styles.member} key={"m" + i}>{member.name}</span>
-                    )
-                })}
+    async function updateTitle() {
+        try {
+            await updateDoc(doc(db, "groups", urlParams.id), { name: groupName });
+            setTDisabled(true);
+        } catch (error) {
+            MySwal.fire("Error", error, "error");
+        }
+    }
+    async function leave() {
+        const groupRef = doc(db, "groups", urlParams.id);
+
+        MySwal.fire({
+            title: 'Leave this group?',
+            text: `Are you sure you want to leave ${groupName}?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Leave'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    await updateDoc(groupRef, {
+                        members: arrayRemove(user.uid)
+                    });
+                    navigate("/groups")
+                } catch (error) {
+                    MySwal.fire("Error", error, "error");
+                }
+            }
+        })
+    }
+    async function deleteGroup() {
+        const groupRef = doc(db, "groups", urlParams.id);
+
+        MySwal.fire({
+            title: 'Delete this group?',
+            text: `Are you sure you want to DELETE ${groupName}?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'DELETE FOREVER',
+            focusCancel: true
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    await deleteDoc(groupRef);
+                    navigate("/groups")
+                } catch (error) {
+                    MySwal.fire("Error", error.message, "error");
+                }
+            }
+        })
+    }
+    if (group) {
+        return (
+            <div className={styles.groupContainer}>
+                <h2 className={styles.title}><Avatar size="120%" rand={groupName + "1234567890"} /><div className={styles.titleContainer}><input ref={titleInputRef} disabled={titleDisabled} type="text" onChange={(e) => { setGName(e.target.value) }} value={groupName} /><span>{groupName}</span></div>
+                    {group && group.data().owner === user.uid && titleDisabled && <img onClick={() => setTDisabled(false)} className={styles.editBtn} src={editImg} alt="edit title" />}
+                    {group && group.data().owner === user.uid && !titleDisabled && <img onClick={updateTitle} className={styles.doneEditBtn} src={checkImg} alt="update title" />}
+
+                </h2>
+                <span className={styles.owner}>👑 {Object.keys(members).length > 0 && members[group.data().owner].name}</span>
+                {group && group.data().owner === user.uid && <div style={{ margin: "1em" }}><input value={inputEmail} onChange={(e) => { setInputEmail(e.target.value) }} style={{ padding: "0.3em" }} type="email" placeholder="invite@email.com" /><button onClick={sendInvite} style={{ display: "inline-flex", margin: "0 0.5em" }} className={cStyles.button}>Send invite</button></div>}
+                <h4 className={styles.membersListTitle}>Members</h4>
+                <div>
+                    {Object.keys(members).length > 0 && Object.keys(members).map((key, i) => {
+                        let member = members[key];
+                        // console.log(member);
+                        // console.log(members);
+                        console.log("hi", member);
+                        return (
+                            <span className={styles.member} key={"m" + i}>{member.name}</span>
+                        )
+                    })}
+                </div>
+                <div style={{ marginTop: "2.5em" }}>
+                    {group && group.data().owner !== user.uid && < button onClick={leave} className={[cStyles.button, cStyles.white, cStyles.inlineFlex, cStyles.bRed].join(" ")}>Leave</button>}
+                    {group && group.data().owner === user.uid && <button onClick={deleteGroup} className={[cStyles.button, cStyles.white, cStyles.inlineFlex, cStyles.bRed].join(" ")}>Delete Group</button>}
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
+    if (!group) {
+        return (<div></div>)
+    }
 }
 
 export default Group;
