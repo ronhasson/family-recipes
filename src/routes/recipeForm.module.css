@@ -95,3 +95,58 @@
     border-top: 1px solid hsl(0deg 0% 75%);
     width: 95%;
 }
+
+.groupShare {
+    display: flex;
+    gap: 0.3em;
+}
+
+.groupShare label {
+    --pSize: 0.45em;
+    direction: ltr;
+    unicode-bidi: isolate;
+    padding: var(--pSize);
+    border-radius: 6px;
+    border: 1px solid grey;
+    margin: 0;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: hsl(0deg 0% 92%);
+    transition: 0.3s background ease-in-out;
+}
+
+.groupShare label>input {
+    margin-left: 0;
+    margin-right: var(--pSize);
+    margin-block: 0;
+    appearance: none;
+    width: 1.4em;
+    height: 1.4em;
+    border: 1px solid dimgrey;
+    border-radius: 6px;
+    display: grid;
+    place-content: center;
+    background: white;
+}
+
+.groupShare input[type="checkbox"]::before {
+    content: "";
+    width: 0.8em;
+    height: 0.8em;
+    border-radius: 6px;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em #0075ff;
+    background-color: #0075ff;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+.groupShare input[type="checkbox"]:checked::before {
+    transform: scale(1);
+}
+
+.labelSelected {
+    background: hsl(200deg 100% 85%) !important;
+}

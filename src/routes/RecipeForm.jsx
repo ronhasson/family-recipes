@@ -10,12 +10,13 @@ import { button, white } from "../commonStyles.module.css";
 import uploadImage from "../img/upload.svg";
 import { db } from "../firebase";
 import { collection, addDoc, serverTimestamp, doc, updateDoc } from "firebase/firestore";
-import { UserContext } from "../App.js";
+import { GroupContext, UserContext } from "../App.js";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDocumentOnce } from "react-firebase-hooks/firestore";
 
 function RecipeForm() {
     const user = useContext(UserContext);
+    const groups = useContext(GroupContext);
     let navigate = useNavigate();
     const urlParams = useParams();
     //console.log(urlParams);
@@ -28,6 +29,8 @@ function RecipeForm() {
     const [prep, setPrep] = useState([0, 0, 0]);
     const [cook, setCook] = useState([0, 0, 0]);
     const [instructions, setInstructions] = useState([""]);
+    const [isPublic, setIsPublic] = useState(true);
+    const [sharedGroups, setSharedGroups] = useState(new Set());
 
     useEffect(() => {
         if (value) {
@@ -40,6 +43,8 @@ function RecipeForm() {
             setPrep(v.prep);
             setCook(v.cook);
             setInstructions(v.instructions);
+            setSharedGroups(new Set(v.sharedWith));
+            setIsPublic(v.isPublic);
         }
     }, [value])
 
@@ -94,8 +99,8 @@ function RecipeForm() {
         const newData = {
             name: title,
             owner: user.uid,
-            sharedWith: [],
-            isPublic: true,
+            sharedWith: [...sharedGroups],
+            isPublic: isPublic,
             date: serverTimestamp(),
             desc: desc,
             tags: tags,
@@ -122,7 +127,23 @@ function RecipeForm() {
             e.preventDefault();
         }
     }
-
+    const handleToggle = ({ target }) => {
+        if (target.checked) {
+            setSharedGroups(new Set([...sharedGroups, target.id]))
+        } else {
+            let nSet = new Set([...sharedGroups]);
+            nSet.delete(target.id);
+            setSharedGroups(nSet);
+        }
+        // setSharedGroups(s => ({ ...s, [target.id]: !s[target.id] }))
+    };
+    // useEffect(() => {
+    //     if (groups) {
+    //         groups.docs.forEach((doc, i) => {
+    //             setSharedGroups(s => ({ ...s, [doc.id]: false }));
+    //         })
+    //     }
+    // }, [groups])
     return (
         <div ref={mainRef} className={styles.formContainer} >
             {error && <h2>{error.code}</h2>}
@@ -146,9 +167,15 @@ function RecipeForm() {
                     <label htmlFor="instr">Instructions</label>
                     <InstructionsInput id="instr" onChange={setInstructions} value={instructions} />
                     <hr className={styles.hr} />
-                    <div><input type="checkbox" />Publicly avilable with link (TODO)</div>
-                    <label htmlFor="">Share with</label>
-                    <input type="text" placeholder="TODO" />
+                    <div><input type="checkbox" checked={isPublic} onChange={() => { setIsPublic(!isPublic) }} />Publicly avilable with link (TODO)</div>
+                    <label htmlFor="">Share with:</label>
+                    <div className={styles.groupShare}>
+                        {groups && groups.docs.map((doc, i) => {
+                            return (
+                                <label className={sharedGroups.has(doc.id) ? styles.labelSelected : null} key={"g" + doc.id}><input checked={sharedGroups.has(doc.id)} onChange={handleToggle} type="checkbox" id={doc.id} value={doc.id} />{doc.data().name}</label>
+                            )
+                        })}
+                    </div>
                     {!publishing && <button style={{ fontSize: "0.9em", marginTop: "1.6em" }} className={[button, white].join(" ")}><img src={uploadImage} alt="" />Publish</button>}
                     {publishing && <span>Publishing...</span>}
                 </form>

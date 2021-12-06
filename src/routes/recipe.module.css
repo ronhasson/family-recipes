@@ -99,3 +99,14 @@
     border-inline-start: 2px inset rgba(0, 0, 0, 0.1);
     padding-inline-start: 0.4em;
 }
+
+.publishedBy {
+    display: block;
+    font-size: 90%;
+    color: dimgray;
+    line-height: 1em;
+}
+
+.publishedName {
+    text-transform: capitalize;
+}

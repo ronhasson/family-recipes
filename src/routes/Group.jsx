@@ -115,6 +115,9 @@ function Group() {
                     await updateDoc(groupRef, {
                         members: arrayRemove(user.uid)
                     });
+                    // TODO -- IMPORTANT -- 
+                    // get all recipes shared with the group
+                    // and remove the group from them
                     navigate("/groups")
                 } catch (error) {
                     MySwal.fire("Error", error, "error");
@@ -138,6 +141,9 @@ function Group() {
             if (result.isConfirmed) {
                 try {
                     await deleteDoc(groupRef);
+                    // TODO -- IMPORTANT -- 
+                    // get all recipes shared with the group
+                    // and remove the group from them
                     navigate("/groups")
                 } catch (error) {
                     MySwal.fire("Error", error.message, "error");

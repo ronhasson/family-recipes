@@ -9,12 +9,14 @@ import { useParams } from "react-router-dom";
 import { useDocumentOnce } from 'react-firebase-hooks/firestore';
 import Loading from "../components/loading";
 import timerImg from "../img/timer.svg";
+import getProfile from "../profileGetter";
 
 function RecipeForm() {
     const user = useContext(UserContext);
     let urlParams = useParams();
     // console.log(urlParams);
     const [value, loading, error] = useDocumentOnce(doc(db, "recipes", urlParams.id));
+    const [ownerName, setOwnerName] = useState("");
     const [rtl, setRtl] = useState(false);
     let v = useRef();
 
@@ -23,6 +25,16 @@ function RecipeForm() {
             v.current = value.data();
             console.log(v);
             setRtl(/[\u0590-\u07FF\u200F\u202B\u202E\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(value.data().name));
+        }
+    }, [value]);
+
+    useEffect(() => {
+        if (value) {
+            getAsync()
+        }
+        async function getAsync() {
+            let n = await getProfile(value.data().owner);
+            setOwnerName(n.name)
         }
     }, [value]);
 
@@ -37,7 +49,8 @@ function RecipeForm() {
         hour: "שעות",
         min: "דקות",
         ing: "רכיבים",
-        direc: "הוראות"
+        direc: "הוראות",
+        publish: "פורסם על ידי"
     }
     const en = {
         prep: "Prep",
@@ -46,7 +59,8 @@ function RecipeForm() {
         hour: "hours",
         min: "min",
         ing: "Ingredients",
-        direc: "Directions"
+        direc: "Directions",
+        publish: "Published by"
     }
 
 
@@ -89,6 +103,10 @@ function RecipeForm() {
                             </div>
                             <h1>{value.data().name}</h1>
                             <div className={rstyles.recipeCont}>
+                                <div style={(rtl) ? { textAlign: "right" } : { textAlign: "left" }}>
+                                    <span className={rstyles.publishedBy}>{lang.publish}</span>
+                                    <span className={rstyles.publishedName}>{ownerName}</span>
+                                </div>
                                 <p dangerouslySetInnerHTML={{ __html: value.data().desc }}></p>
                                 <div className={rstyles.time}>
                                     <img src={timerImg} alt="time" />
