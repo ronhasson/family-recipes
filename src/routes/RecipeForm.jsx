@@ -175,6 +175,7 @@ function RecipeForm() {
                                 <label className={sharedGroups.has(doc.id) ? styles.labelSelected : null} key={"g" + doc.id}><input checked={sharedGroups.has(doc.id)} onChange={handleToggle} type="checkbox" id={doc.id} value={doc.id} />{doc.data().name}</label>
                             )
                         })}
+                        {groups && groups.docs.length === 0 && <span>No groups found.</span>}
                     </div>
                     {!publishing && <button style={{ fontSize: "0.9em", marginTop: "1.6em" }} className={[button, white].join(" ")}><img src={uploadImage} alt="" />Publish</button>}
                     {publishing && <span>Publishing...</span>}

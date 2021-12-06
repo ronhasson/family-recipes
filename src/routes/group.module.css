@@ -33,6 +33,7 @@
     top: 0;
     bottom: 0;
     left: 0;
+    font-weight: bold;
 }
 
 .titleContainer {
@@ -42,6 +43,7 @@
 
 .titleContainer span {
     font-size: 2em;
+    font-family: sans-serif;
     visibility: hidden;
 }
 
