@@ -14,6 +14,7 @@ import { db } from "../firebase";
 import editImg from "../img/edit.svg";
 import checkImg from "../img/check.svg";
 import { div } from "prelude-ls";
+import { arrayUnion } from "firebase/firestore";
 
 function Group() {
     let urlParams = useParams();
@@ -115,8 +116,12 @@ function Group() {
                     await updateDoc(groupRef, {
                         members: arrayRemove(user.uid)
                     });
+                    const premissionsRef = doc(db, "users", user.uid, "private", "groups");
+                    await updateDoc(premissionsRef, {
+                        groups: arrayRemove(urlParams.id)
+                    });
                     // TODO -- IMPORTANT -- 
-                    // get all recipes shared with the group
+                    // get all of the user's recipes shared with the group
                     // and remove the group from them
                     navigate("/groups")
                 } catch (error) {
@@ -140,9 +145,13 @@ function Group() {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
+                    const premissionsRef = doc(db, "users", user.uid, "private", "groups");
+                    await updateDoc(premissionsRef, {
+                        groups: arrayRemove(urlParams.id)
+                    });
                     await deleteDoc(groupRef);
                     // TODO -- IMPORTANT -- 
-                    // get all recipes shared with the group
+                    // get all of the user's recipes shared with the group
                     // and remove the group from them
                     navigate("/groups")
                 } catch (error) {

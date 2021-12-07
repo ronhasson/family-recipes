@@ -16,7 +16,7 @@ export default function Avatar(props) {
     }
 
     return (
-        <img className="avatar" src={avatar_url} style={style} alt="" />
+        <img onClick={props.onClick} className="avatar" src={avatar_url} style={style} alt="" />
     );
 }
 

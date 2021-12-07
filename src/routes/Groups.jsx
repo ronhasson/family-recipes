@@ -34,16 +34,26 @@ export default function Groups() {
                 createDate: serverTimestamp(),
             });
             console.log("Document written with ID: ", docRef);
+            const premissionsRef = doc(db, "users", user.uid, "private", "groups");
+            await updateDoc(premissionsRef, {
+                groups: arrayUnion(docRef.id)
+            });
         } catch (error) {
             console.error(error);
         } finally {
         }
     }
     async function joinGroup(id) {
+        //TODO -- IMPORTANT --
+        // limit the user to 9 groups
         const groupRef = doc(db, "groups", id);
+        const premissionsRef = doc(db, "users", user.uid, "private", "groups");
         try {
             await updateDoc(groupRef, {
                 members: arrayUnion(user.uid)
+            });
+            await updateDoc(premissionsRef, {
+                groups: arrayUnion(id)
             });
             await deleteDoc(doc(db, "users", user.uid, "invites", id));
         } catch (error) {

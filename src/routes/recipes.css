@@ -67,3 +67,11 @@
     user-select: none;
     border: 1px solid grey;
 }
+
+.recipesHeader {
+    min-height: 1.2em;
+}
+
+.recipesHeader>h1 {
+    text-transform: capitalize;
+}
