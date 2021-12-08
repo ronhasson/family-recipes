@@ -25,6 +25,12 @@ export default function Groups() {
     console.log(invites)
 
     async function createGroup() {
+        // -- IMPORTANT --
+        // limit the user to 9 groups
+        if (groups && groups.docs.length >= 9) {
+            MySwal.fire("Cant join more groups", "You cant be in more than 9 groups at a time, please leave or delete a group before joining a new one.", "error");
+            return;
+        }
         let docRef;
         try {
             docRef = await addDoc(collection(db, "groups"), {
@@ -44,8 +50,12 @@ export default function Groups() {
         }
     }
     async function joinGroup(id) {
-        //TODO -- IMPORTANT --
+        // -- IMPORTANT --
         // limit the user to 9 groups
+        if (groups && groups.docs.length >= 9) {
+            MySwal.fire("Cant join more groups", "You cant be in more than 9 groups at a time, please leave or delete a group before joining a new one.", "error");
+            return;
+        }
         const groupRef = doc(db, "groups", id);
         const premissionsRef = doc(db, "users", user.uid, "private", "groups");
         try {

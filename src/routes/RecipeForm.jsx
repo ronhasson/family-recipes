@@ -167,7 +167,7 @@ function RecipeForm() {
                     <label htmlFor="instr">Instructions</label>
                     <InstructionsInput id="instr" onChange={setInstructions} value={instructions} />
                     <hr className={styles.hr} />
-                    <div><input type="checkbox" checked={isPublic} onChange={() => { setIsPublic(!isPublic) }} />Publicly avilable with link (TODO)</div>
+                    <div><input type="checkbox" checked={isPublic} onChange={() => { setIsPublic(!isPublic) }} />Publicly avilable with link</div>
                     <label htmlFor="">Share with:</label>
                     <div className={styles.groupShare}>
                         {groups && groups.docs.map((doc, i) => {

@@ -116,13 +116,17 @@ function Group() {
                     await updateDoc(groupRef, {
                         members: arrayRemove(user.uid)
                     });
+
+                    // -- IMPORTANT -- 
+                    // get all of the user's recipes shared with the group
+                    // and remove the group from them
+                    await deleteSharedWith(urlParams.id);
+
                     const premissionsRef = doc(db, "users", user.uid, "private", "groups");
                     await updateDoc(premissionsRef, {
                         groups: arrayRemove(urlParams.id)
                     });
-                    // TODO -- IMPORTANT -- 
-                    // get all of the user's recipes shared with the group
-                    // and remove the group from them
+
                     navigate("/groups")
                 } catch (error) {
                     MySwal.fire("Error", error, "error");
@@ -145,14 +149,19 @@ function Group() {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
+                    // -- IMPORTANT -- 
+                    // get all of the user's recipes shared with the group
+                    // and remove the group from them
+                    await deleteSharedWith(urlParams.id);
+
+                    // delete the premissions to read recipes from the group
                     const premissionsRef = doc(db, "users", user.uid, "private", "groups");
                     await updateDoc(premissionsRef, {
                         groups: arrayRemove(urlParams.id)
                     });
+
                     await deleteDoc(groupRef);
-                    // TODO -- IMPORTANT -- 
-                    // get all of the user's recipes shared with the group
-                    // and remove the group from them
+
                     navigate("/groups")
                 } catch (error) {
                     MySwal.fire("Error", error.message, "error");
@@ -160,6 +169,23 @@ function Group() {
             }
         })
     }
+    async function deleteSharedWith(groupId, fromAllUsers = false) {
+        const q = query(collection(db, "recipes"), where("sharedWith", "array-contains", groupId));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach(async (doc) => {
+            if (!fromAllUsers && doc.data().owner === user.uid) {
+                await updateDoc(doc.ref, {
+                    sharedWith: arrayRemove(groupId)
+                });
+            }
+            if (fromAllUsers) {
+                await updateDoc(doc.ref, {
+                    sharedWith: arrayRemove(groupId)
+                });
+            }
+        });
+    }
+
     if (group) {
         return (
             <div className={styles.groupContainer}>
