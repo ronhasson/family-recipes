@@ -13,7 +13,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: clamp(0.8em, 2vmin, 3em);
+    font-size: clamp(0.8em, 2.5vmin, 3em);
 }
 
 @media (max-width:320px) {
@@ -34,7 +34,7 @@
     /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
 }
 
-@media (max-width:961px) {
+@media (max-width:961px) and (min-width: 481px) {
 
     /* tablet, landscape iPad, lo-res laptops ands desktops */
     .loginContainer {

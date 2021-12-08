@@ -13,18 +13,28 @@ service cloud.firestore {
       	allow create: if request.auth != null;
         allow read, delete: if userid == request.auth.uid;
       }
+      match /private/{doc}{
+        allow read, write: if userid == request.auth.uid;
+      }
     }
     match /recipes/{recipe}{
     	allow create: if request.auth != null; //temp
       allow read: if resource.data.isPublic == true;
       allow read, write: if resource.data.owner == request.auth.uid;
       allow read, write: if request.auth.token.admin == true;
+      //since i cant get all of the group members of all of the user's groups, i agregate
+      allow read: if request.auth != null && resource.data.sharedWith.hasAny(getGroups());//insecure
     }
+    function getGroups() {
+    	return get(/databases/$(database)/documents/users/$(request.auth.uid)/private/groups).data.groups;
+    }
+    
     match /groups/{group}{
     	allow create: if request.auth != null; //temp
-      allow read: if resource.data.members.hasAny([request.auth.uid]);
+      allow read, update: if resource.data.members.hasAny([request.auth.uid]);
       allow read, write: if resource.data.owner == request.auth.uid;
       allow read, write: if request.auth.token.admin == true;
+      //delete rule below when i have the serverless and implement proper invite functions
       allow write: if request.auth != null && exists(/databases/$(database)/documents/users/$(request.auth.uid)/invites/$(group))
 
     }

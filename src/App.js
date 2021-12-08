@@ -48,7 +48,8 @@ function App() {
   }, [location, user, groupSnapshot]);
 
   useEffect(() => {
-    if (user) {
+    if (user && user.displayName) {
+      console.log(user.displayName);
       const readUserData = async () => {
         const docRef = doc(db, "users", user.uid);
         const docSnap = await getDoc(docRef);
@@ -57,11 +58,20 @@ function App() {
         } else {
           // doc.data() will be undefined in this case
           console.log("No such document! - user");
-          setDoc(docRef, { name: user.displayName, email: user.email }, { merge: true });
+          await setDoc(docRef, { name: user.displayName, email: user.email }, { merge: true });
+        }
+        const docPremRef2 = doc(db, "users", user.uid, "private", "groups");
+        const docSnap2 = await getDoc(docPremRef2);
+        if (docSnap2.exists()) {
+          // console.log("Document data:", docSnap.data());
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document! - group prem");
+          await setDoc(docPremRef2, { groups: [] }, { merge: true });
         }
       }
-      readUserData();
-
+      setTimeout(readUserData, 10);
+      //readUserData();
     }
   }, [user]);
 

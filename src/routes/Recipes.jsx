@@ -17,7 +17,7 @@ export default function Recipes() {
 
     const q = query(collection(db, "recipes"), where("owner", "==", user.uid));
     const [snapshot, loading, error] = useCollection(q);
-    const q2 = query(collection(db, "recipes"), where("sharedWith", "array-contains-any", groupsid));
+    const q2 = (groupsid.length > 0) ? query(collection(db, "recipes"), where("sharedWith", "array-contains-any", groupsid)) : undefined;
     const [snapshot2, loading2, error2] = useCollection(q2);
     const [comboSnapshot, setComboSnaphot] = useState([]);
 
@@ -33,8 +33,10 @@ export default function Recipes() {
         if (error2) {
             console.log(error2)
         }
-        if (snapshot && snapshot2) {
-            let temp = snapshot.docs.concat(snapshot2.docs);
+        if (snapshot || snapshot2) {
+            let nsnapshot = (!!snapshot) ? snapshot.docs : [];
+            let nsnapshot2 = (!!snapshot2) ? snapshot2.docs : [];
+            let temp = nsnapshot.concat(nsnapshot2);
             console.log(temp);
             console.log(temp.map(doc => doc.id));
             var flags = {};

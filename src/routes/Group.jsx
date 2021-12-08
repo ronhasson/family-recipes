@@ -152,7 +152,7 @@ function Group() {
                     // -- IMPORTANT -- 
                     // get all of the user's recipes shared with the group
                     // and remove the group from them
-                    await deleteSharedWith(urlParams.id);
+                    await deleteSharedWith(urlParams.id, true);
 
                     // delete the premissions to read recipes from the group
                     const premissionsRef = doc(db, "users", user.uid, "private", "groups");
@@ -165,20 +165,28 @@ function Group() {
                     navigate("/groups")
                 } catch (error) {
                     MySwal.fire("Error", error.message, "error");
+                    console.log(error);
                 }
             }
         })
     }
     async function deleteSharedWith(groupId, fromAllUsers = false) {
-        const q = query(collection(db, "recipes"), where("sharedWith", "array-contains", groupId));
+        console.log(groupId);
+        // const q = query(collection(db, "recipes"), where("sharedWith", "array-contains", groupId));
+        const q = query(collection(db, "recipes"), where("owner", "==", user.uid));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach(async (doc) => {
-            if (!fromAllUsers && doc.data().owner === user.uid) {
-                await updateDoc(doc.ref, {
-                    sharedWith: arrayRemove(groupId)
-                });
-            }
-            if (fromAllUsers) {
+            // if (!fromAllUsers && doc.data().owner === user.uid) {
+            //     await updateDoc(doc.ref, {
+            //         sharedWith: arrayRemove(groupId)
+            //     });
+            // }
+            // if (fromAllUsers) {
+            //     await updateDoc(doc.ref, {
+            //         sharedWith: arrayRemove(groupId)
+            //     });
+            // }
+            if (doc.data().sharedWith.indexOf(groupId) >= 0) {
                 await updateDoc(doc.ref, {
                     sharedWith: arrayRemove(groupId)
                 });
