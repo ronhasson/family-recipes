@@ -21,8 +21,8 @@ export default function Groups() {
     // const [snapshot, loading, error] = useCollection(q);
     // console.log(snapshot);
     // console.log(error);
-    console.log(groups);
-    console.log(invites)
+    // console.log(groups);
+    // console.log(invites)
 
     async function createGroup() {
         // -- IMPORTANT --

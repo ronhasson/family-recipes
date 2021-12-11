@@ -94,7 +94,7 @@ function RecipeForm() {
     async function submit(e) {
         e.preventDefault();
         // console.log(e)
-        console.log("submit");
+        // console.log("submit");
         setPublishing(true);
         const newData = {
             name: title,

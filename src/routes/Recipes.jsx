@@ -8,6 +8,8 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 import { UserContext, GroupContext } from "../App.js";
 import { useContext } from "react";
 import { useEffect, useState } from "react";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 export default function Recipes() {
     const user = useContext(UserContext);
@@ -24,21 +26,26 @@ export default function Recipes() {
     const [filterState, setFilterState] = useState("");
     const [filterTitle, setFilterTitle] = useState("Group Name");
 
-    console.log(snapshot);
-    console.log(snapshot2);
+    const MySwal = withReactContent(Swal);
+
+    // console.log(snapshot);
+    // console.log(snapshot2);
     useEffect(() => {
+        console.log("snap1 OR snap2: ", !!snapshot || !!snapshot2)
         if (error) {
-            console.log(error)
+            console.log(error);
+            MySwal.fire("Error", error, "error");
         }
         if (error2) {
-            console.log(error2)
+            console.log(error2);
+            MySwal.fire("Error", error, "error");
         }
         if (snapshot || snapshot2) {
             let nsnapshot = (!!snapshot) ? snapshot.docs : [];
             let nsnapshot2 = (!!snapshot2) ? snapshot2.docs : [];
             let temp = nsnapshot.concat(nsnapshot2);
-            console.log(temp);
-            console.log(temp.map(doc => doc.id));
+            // console.log(temp);
+            // console.log(temp.map(doc => doc.id));
             var flags = {};
             var newTemp = temp.filter(function (entry) {
                 if (flags[entry.id]) {
@@ -47,8 +54,8 @@ export default function Recipes() {
                 flags[entry.id] = true;
                 return true;
             });
-            console.log(newTemp);
-            console.log(newTemp.map(doc => doc.id));
+            // console.log(newTemp);
+            // console.log(newTemp.map(doc => doc.id));
 
             setComboSnaphot(newTemp);
         }

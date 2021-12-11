@@ -52,17 +52,17 @@ function Group() {
             m[member] = profileGet(member);
             // m[member] = d;
         });
-        console.log(m);
-        console.log(Object.keys(m));
+        // console.log(m);
+        // console.log(Object.keys(m));
         let promises = Object.keys(m).map(v => { return m[v] });
-        console.log(promises)
+        // console.log(promises)
         let newM = {}
         Promise.all(promises).then((values) => {
-            console.log(values);
+            // console.log(values);
             Object.keys(m).forEach((v, i) => {
                 newM[v] = values[i];
             })
-            console.log(newM);
+            // console.log(newM);
             setMembers(newM);
         })
     }
@@ -98,7 +98,7 @@ function Group() {
         if (docSnap && docSnap.exists()) {
             // console.log("Document data:", docSnap.data());
             const docRef = doc(db, "users", docSnap.id, "invites", urlParams.id);
-            console.log(docSnap.id);
+            // console.log(docSnap.id);
             try {
                 setDoc(docRef, { gName: groupName, uuid: urlParams.id, by: user.displayName });
                 MySwal.fire("Invitation sent!", `${docSnap.data().name}(${inputEmail}) received your invitation.`, "success");
@@ -173,7 +173,7 @@ function Group() {
                     // -- IMPORTANT -- 
                     // get all of the user's recipes shared with the group
                     // and remove the group from them
-                    await deleteSharedWith(urlParams.id, true);
+                    await deleteSharedWith(urlParams.id);
 
                     // delete the premissions to read recipes from the group
                     const premissionsRef = doc(db, "users", user.uid, "private", "groups");
@@ -191,8 +191,8 @@ function Group() {
             }
         })
     }
-    async function deleteSharedWith(groupId, fromAllUsers = false) {
-        console.log(groupId);
+    async function deleteSharedWith(groupId) {
+        // console.log(groupId);
         // const q = query(collection(db, "recipes"), where("sharedWith", "array-contains", groupId));
         const q = query(collection(db, "recipes"), where("owner", "==", user.uid));
         const querySnapshot = await getDocs(q);
@@ -231,7 +231,7 @@ function Group() {
                         let member = members[key];
                         // console.log(member);
                         // console.log(members);
-                        console.log("hi", member);
+                        // console.log("hi", member);
                         return (
                             <span className={styles.member} key={"m" + i}>{member.name}</span>
                         )

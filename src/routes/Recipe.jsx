@@ -23,7 +23,7 @@ function RecipeForm() {
     useEffect(() => {
         if (value) {
             v.current = value.data();
-            console.log(v);
+            // console.log(v);
             setRtl(/[\u0590-\u07FF\u200F\u202B\u202E\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(value.data().name));
         }
     }, [value]);

@@ -26,7 +26,7 @@ function TagsInput(props) {
     }, [props.tags])
 
     const handleBlur = (e) => {
-        console.log(e);
+        // console.log(e);
         if (e.target.value) {
             e.target.focus();
             addTags(e);

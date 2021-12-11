@@ -8,14 +8,14 @@ import {
 
 async function getProfile(id) {
     let local = getUserLocal(id);
-    if(local && expValid(local.exp,30)){
+    if (local && expValid(local.exp, 30)) {
         console.log("local ", local);
         return local;
     }
     let server = await getUserServer(id);
-    if(server){
+    if (server) {
         console.log("server ", server);
-        updateLocalUser(id,server);
+        updateLocalUser(id, server);
         return server;
     }
     console.log("user not found");
@@ -28,7 +28,7 @@ function getAllLocal() {
 
 function getUserLocal(id) {
     let u = getAllLocal();
-    if(!u){
+    if (!u) {
         return undefined
     }
     return u[id];
@@ -36,13 +36,13 @@ function getUserLocal(id) {
 
 function updateLocalUser(id, data) {
     let all = getAllLocal();
-    if(!all){
+    if (!all) {
         all = {};
     }
     let newData = data;
     newData.exp = new Date().toISOString();
     all[id] = newData;
-    console.log(all);
+    // console.log(all);
     localStorage.setItem("users", JSON.stringify(all));
 }
 
@@ -57,7 +57,7 @@ function expValid(date, days) {
     const today = new Date();
     const expDate = new Date(date);
 
-    let diff = (today-expDate)/1000/60/60/24;
-    return diff<days;
+    let diff = (today - expDate) / 1000 / 60 / 60 / 24;
+    return diff < days;
 }
 export default getProfile;

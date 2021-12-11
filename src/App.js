@@ -15,6 +15,8 @@ import RecipeForm from './routes/RecipeForm';
 import Recipe from './routes/Recipe';
 import DeleteRecipe from './components/DeleteRecipe';
 import Group from './routes/Group';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 
 export const UserContext = createContext();
@@ -27,6 +29,8 @@ function App() {
   const [groupSnapshot, gLoading, gError] = useCollection(q);
   let [inviteQ, setInvQ] = useState();
   const [invitesSnapshot, iLoading, iError] = useCollection(inviteQ);
+
+  const MySwal = withReactContent(Swal);
 
   let location = useLocation();
 
@@ -49,7 +53,7 @@ function App() {
 
   useEffect(() => {
     if (user && user.displayName) {
-      console.log(user.displayName);
+      // console.log(user.displayName);
       const readUserData = async () => {
         const docRef = doc(db, "users", user.uid);
         const docSnap = await getDoc(docRef);
@@ -113,12 +117,27 @@ function App() {
     }
     if (error) {
       console.log(error);
+      MySwal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.message
+      });
     }
     if (gError) {
       console.log(gError);
+      MySwal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.message
+      });
     }
     if (iError) {
       console.log(iError);
+      MySwal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.message
+      });
     }
     return (<LoginScreen />);
   }

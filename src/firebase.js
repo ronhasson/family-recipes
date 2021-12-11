@@ -11,8 +11,7 @@ import {
 } from "firebase/auth";
 
 import {
-    getFirestore,
-    setLogLevel
+    getFirestore
 } from "firebase/firestore";
 
 import {

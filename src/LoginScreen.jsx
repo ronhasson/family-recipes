@@ -13,7 +13,7 @@ import withReactContent from 'sweetalert2-react-content';
 function LoginScreen() {
     const [showReg, setShowReg] = useState(false);
     const [inputs, setInputs] = useState({});
-    const MySwal = withReactContent(Swal)
+    const MySwal = withReactContent(Swal);
 
     const handleChange = (event) => {
         const name = event.target.name;
