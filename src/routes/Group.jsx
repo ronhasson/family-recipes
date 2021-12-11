@@ -37,13 +37,34 @@ function Group() {
     useEffect(() => {
         setGroup(groups.docs.filter(doc => doc.id === urlParams.id)[0]);
     }, [groups, urlParams.id]);
+    // async function getmembers() {
+    //     let m = { ...members };
+    //     group.data().members.map(async (member, i) => {
+    //         let d = await profileGet(member);
+    //         m[member] = d;
+    //     })
+    //     setMembers(m)
+    // }
     async function getmembers() {
         let m = { ...members };
+
         group.data().members.map(async (member, i) => {
-            let d = await profileGet(member);
-            m[member] = d;
+            m[member] = profileGet(member);
+            // m[member] = d;
+        });
+        console.log(m);
+        console.log(Object.keys(m));
+        let promises = Object.keys(m).map(v => { return m[v] });
+        console.log(promises)
+        let newM = {}
+        Promise.all(promises).then((values) => {
+            console.log(values);
+            Object.keys(m).forEach((v, i) => {
+                newM[v] = values[i];
+            })
+            console.log(newM);
+            setMembers(newM);
         })
-        setMembers(m)
     }
     useEffect(() => {
         if (group) {
@@ -51,22 +72,22 @@ function Group() {
         }
         // console.log(members);
     }, [group]);
-    useEffect(() => {
-        setTimeout(() => {
-            if (group) {
-                getmembers();
-            }
-        }, 20)
-        // console.log(members);
-    }, []);
-    const [, updateState] = useState();
-    const forceUpdate = useCallback(() => updateState({}), []);
-    useEffect(() => {
-        console.log(JSON.stringify(members));
-        console.log(Object.keys(members).length);
-        //setMembers({ ...members });
-        forceUpdate();
-    }, [members]);
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         if (group) {
+    //             getmembers();
+    //         }
+    //     }, 20)
+    //     // console.log(members);
+    // }, []);
+    // const [, updateState] = useState();
+    // const forceUpdate = useCallback(() => updateState({}), []);
+    // useEffect(() => {
+    //     console.log(JSON.stringify(members));
+    //     console.log(Object.keys(members).length);
+    //     //setMembers({ ...members });
+    //     forceUpdate();
+    // }, [members]);
 
     const sendInvite = async () => {
         const usersRef = collection(db, "users");
