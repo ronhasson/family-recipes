@@ -7,7 +7,7 @@ import { collection, query, where } from "firebase/firestore";
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { UserContext, GroupContext } from "../App.js";
 import { useContext } from "react";
-import { useEffect, useState } from "react/cjs/react.development";
+import { useEffect, useState } from "react";
 
 export default function Recipes() {
     const user = useContext(UserContext);

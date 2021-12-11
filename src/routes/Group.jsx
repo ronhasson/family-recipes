@@ -4,7 +4,7 @@ import { GroupContext } from "../App.js";
 import { useContext, useEffect, useState } from "react";
 import profileGet from "../profileGetter";
 import styles from "./group.module.css";
-import { useCallback, useRef } from "react/cjs/react.development";
+import { useCallback, useRef } from "react";
 import cStyles from "../commonStyles.module.css";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
@@ -80,7 +80,7 @@ function Group() {
             console.log(docSnap.id);
             try {
                 setDoc(docRef, { gName: groupName, uuid: urlParams.id, by: user.displayName });
-                MySwal.fire("Invitation sent!", `${docSnap.data().name}(${inputEmail}) recived your invitation.`, "success");
+                MySwal.fire("Invitation sent!", `${docSnap.data().name}(${inputEmail}) received your invitation.`, "success");
                 setInputEmail("");
             } catch (error) {
                 MySwal.fire("Error", error, "error");

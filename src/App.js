@@ -70,6 +70,7 @@ function App() {
           await setDoc(docPremRef2, { groups: [] }, { merge: true });
         }
       }
+      //its in setTimeout bc when user will be loaded, user.displayName will be loaded in a delay (but the user.email will be fine for some reason)
       setTimeout(readUserData, 10);
       //readUserData();
     }
