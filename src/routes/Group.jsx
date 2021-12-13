@@ -4,7 +4,7 @@ import { GroupContext } from "../App.js";
 import { useContext, useEffect, useState } from "react";
 import profileGet from "../profileGetter";
 import styles from "./group.module.css";
-import { useCallback, useRef } from "react";
+import { useRef } from "react";
 import cStyles from "../commonStyles.module.css";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
@@ -13,8 +13,6 @@ import { arrayRemove, collection, deleteDoc, doc, getDocs, query, setDoc, update
 import { db } from "../firebase";
 import editImg from "../img/edit.svg";
 import checkImg from "../img/check.svg";
-import { div } from "prelude-ls";
-import { arrayUnion } from "firebase/firestore";
 
 function Group() {
     let urlParams = useParams();

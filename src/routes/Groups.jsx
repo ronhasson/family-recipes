@@ -1,11 +1,10 @@
 import GroupAvatar from "../components/groupAvatar";
 import "./groups.css";
 import { db } from "../firebase";
-import { collection, query, where, addDoc, serverTimestamp, doc, arrayUnion, updateDoc, deleteDoc } from "firebase/firestore";
-import { useCollection } from 'react-firebase-hooks/firestore';
+import { collection, addDoc, serverTimestamp, doc, arrayUnion, updateDoc, deleteDoc } from "firebase/firestore";
 import { UserContext, GroupContext, InvitesContext } from "../App.js";
 import { useContext } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import addImg from "../img/add.svg";
 import cStyles from "../commonStyles.module.css";
 import Swal from 'sweetalert2';

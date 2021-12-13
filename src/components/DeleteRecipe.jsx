@@ -3,7 +3,7 @@ import style from "./deleteRecipe.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../firebase.js";
 import { doc, deleteDoc } from "firebase/firestore";
-import { button, white } from "../commonStyles.module.css";
+import { button } from "../commonStyles.module.css";
 
 const buttonStyle = {
     display: "inline-flex",

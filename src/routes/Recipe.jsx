@@ -4,7 +4,7 @@ import styles from "./recipeForm.module.css";
 import rstyles from "./recipe.module.css";
 import { db } from "../firebase";
 import { doc } from "firebase/firestore";
-import { UserContext } from "../App.js";
+// import { UserContext } from "../App.js";
 import { useParams } from "react-router-dom";
 import { useDocumentOnce } from 'react-firebase-hooks/firestore';
 import Loading from "../components/loading";
@@ -12,7 +12,7 @@ import timerImg from "../img/timer.svg";
 import getProfile from "../profileGetter";
 
 function RecipeForm() {
-    const user = useContext(UserContext);
+    // const user = useContext(UserContext);
     let urlParams = useParams();
     // console.log(urlParams);
     const [value, loading, error] = useDocumentOnce(doc(db, "recipes", urlParams.id));
